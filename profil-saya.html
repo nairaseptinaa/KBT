@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profil Pengguna - INKFINITY</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-sm">
+
+<!-- Subnav -->
+<nav aria-label="Sub navigation" class="bg-[#2563eb] text-xs text-white px-4 sm:px-8 py-1 overflow-x-auto whitespace-nowrap font-normal">
+  <a class="inline-block mr-4 hover:underline" href="#">Fotocopy</a>
+  <a class="inline-block mr-4 hover:underline" href="#">Digital Printing</a>
+  <a class="inline-block mr-4 hover:underline" href="#">Offset Printing</a>
+  <a class="inline-block mr-4 hover:underline" href="#">Large Format Printing</a>
+</nav>
+
+<!-- Tombol Kembali ke Beranda -->
+<div class="max-w-7xl mx-auto px-4 sm:px-8 pt-16 pb-6">
+  <a href="index.html" class="inline-block bg-black text-white font-semibold rounded-md px-6 py-3 shadow-md hover:bg-gray-900 transition">
+    &larr; Kembali ke Beranda
+  </a>
+</div>
+
+<!-- Main content -->
+<main class="max-w-7xl mx-auto px-4 sm:px-8 py-8">
+  <div class="bg-white rounded shadow p-6 flex flex-col md:flex-row gap-8">
+    <!-- Sidebar -->
+    <aside class="w-full md:w-64 flex flex-col space-y-6">
+      <div class="flex items-center space-x-3">
+        <img id="profile-sidebar-image" alt="Foto profil" class="rounded-full w-12 h-12 object-cover" src="https://via.placeholder.com/96" />
+        <div class="truncate">
+          <p class="font-semibold text-sm truncate max-w-[120px]" id="username-display">Belum mengisi profil</p>
+          <p class="text-xs text-gray-400 flex items-center space-x-1">
+            <i class="fas fa-pencil-alt text-gray-400 text-xs"></i>
+            <span>Ubah Profil</span>
+          </p>
+        </div>
+      </div>
+      <nav class="flex flex-col space-y-2 text-sm font-normal text-gray-700 max-w-[300px]">
+        <a class="flex items-center space-x-2 font-semibold text-blue-800" href="#"><i class="far fa-user text-blue-700 text-lg"></i><span>Akun Saya</span></a>
+        <a class="pl-8 text-[#2563eb] font-normal hover:underline" href="#">Profil</a>
+        <a class="pl-8 hover:underline" href="#">Bank & Kartu</a>
+        <a class="pl-8 hover:underline" href="#">Alamat</a>
+        <a class="pl-8 hover:underline" href="#">Ubah Password</a>
+        <a class="pl-8 hover:underline" href="#">Pengaturan Notifikasi</a>
+        <a class="pl-8 hover:underline" href="#">Pengaturan Privasi</a>
+      </nav>
+    </aside>
+
+    <!-- Profile form -->
+    <section class="flex-grow">
+      <h2 class="font-bold text-lg mb-1">Profil Saya</h2>
+      <p class="text-gray-600 mb-6 text-sm max-w-xl">Kelola informasi profil Anda untuk mengontrol, melindungi dan mengamankan akun</p>
+      <hr class="border-gray-300 mb-6"/>
+      <form id="profile-form" class="flex flex-col md:flex-row gap-8">
+        <div class="flex-grow max-w-xl space-y-4 text-sm text-gray-700">
+          <div class="flex items-center">
+            <label class="w-28" for="username">Username</label>
+            <input class="border border-gray-300 rounded px-3 py-1 w-full" id="username" type="text" required/>
+          </div>
+          <div class="flex items-center">
+            <label class="w-28" for="nama">Nama</label>
+            <input class="border border-gray-300 rounded px-3 py-1 w-full" id="nama" type="text" required/>
+          </div>
+          <div class="flex items-center">
+            <label class="w-28" for="email">Email</label>
+            <input class="border border-gray-300 rounded px-3 py-1 w-full" id="email" type="email" required/>
+          </div>
+          <div class="flex items-center">
+            <label class="w-28" for="telp">Nomor Telepon</label>
+            <input class="border border-gray-300 rounded px-3 py-1 w-full" id="telp" type="tel" required/>
+          </div>
+          <div class="flex items-center">
+            <label class="w-28" for="nama-toko">Nama Toko</label>
+            <input class="border border-gray-300 rounded px-3 py-1 w-full" id="nama-toko" type="text" required/>
+          </div>
+          <div class="flex items-center">
+            <label class="w-28">Jenis Kelamin</label>
+            <div class="flex space-x-4">
+              <label><input name="gender" type="radio" value="Laki-laki" required/> Laki-laki</label>
+              <label><input name="gender" type="radio" value="Perempuan"/> Perempuan</label>
+              <label><input name="gender" type="radio" value="Lainnya"/> Lainnya</label>
+            </div>
+          </div>
+          <div class="flex items-center">
+            <label class="w-28" for="tgl-lahir">Tanggal lahir</label>
+            <input class="border border-gray-300 rounded px-3 py-1 w-full" id="tgl-lahir" type="date" required/>
+          </div>
+          <div>
+            <button class="bg-[#2563eb] text-white px-6 py-2 rounded font-semibold hover:bg-[#1e40af]" type="submit">Simpan</button>
+          </div>
+        </div>
+        <div class="flex flex-col items-center">
+          <img id="profile-upload-image" alt="Foto profil" class="rounded-full w-24 h-24 object-cover mb-2" src="https://via.placeholder.com/96" />
+          <input type="file" accept="image/*" id="image-upload" class="border rounded px-3 py-2 mb-1"/>
+          <p class="text-xs text-gray-500 text-center max-w-[140px]">Ukuran maks: 1 MB<br/>Format: JPG, PNG</p>
+        </div>
+      </form>
+    </section>
+  </div>
+</main>
+
+<!-- Firebase Script -->
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDhimkPplFDgAk5jLXh-ZMtvh1w6d2hWxc",
+    authDomain: "inkfinity-project.firebaseapp.com",
+    projectId: "inkfinity-project",
+    storageBucket: "inkfinity-project.appspot.com",
+    messagingSenderId: "177359193295",
+    appId: "1:177359193295:web:6298a57e48db72da5263ba",
+    measurementId: "G-R4L6BYGFBC"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  const storage = firebase.storage();
+
+  const form = document.getElementById('profile-form');
+  const imageInput = document.getElementById('image-upload');
+  const imagePreview = document.getElementById('profile-upload-image');
+  const sidebarImage = document.getElementById('profile-sidebar-image');
+  const usernameDisplay = document.getElementById('username-display');
+
+  let uploadedImageURL = "";
+
+  imageInput.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (file && file.size < 1048576) {
+      const reader = new FileReader();
+      reader.onload = event => imagePreview.src = event.target.result;
+      reader.readAsDataURL(file);
+
+      const storageRef = storage.ref('profile_images/' + file.name);
+      await storageRef.put(file);
+      uploadedImageURL = await storageRef.getDownloadURL();
+    } else {
+      alert("Ukuran file terlalu besar! Maks 1 MB.");
+      e.target.value = "";
+    }
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = document.getElementById("username").value;
+    const data = {
+      username,
+      nama: document.getElementById("nama").value,
+      email: document.getElementById("email").value,
+      telp: document.getElementById("telp").value,
+      namaToko: document.getElementById("nama-toko").value,
+      gender: form.gender.value,
+      tglLahir: document.getElementById("tgl-lahir").value,
+      fotoURL: uploadedImageURL || imagePreview.src
+    };
+
+    await db.collection("users").doc(username).set(data);
+    usernameDisplay.textContent = username;
+    sidebarImage.src = data.fotoURL;
+    alert("Profil berhasil disimpan!");
+    localStorage.setItem("last_username", username);
+  });
+
+  window.onload = async () => {
+    const savedUsername = localStorage.getItem("last_username");
+    if (savedUsername) {
+      const doc = await db.collection("users").doc(savedUsername).get();
+      if (doc.exists) {
+        const data = doc.data();
+        document.getElementById("username").value = data.username;
+        document.getElementById("nama").value = data.nama;
+        document.getElementById("email").value = data.email;
+        document.getElementById("telp").value = data.telp;
+        document.getElementById("nama-toko").value = data.namaToko;
+        document.getElementById("tgl-lahir").value = data.tglLahir;
+        imagePreview.src = data.fotoURL;
+        sidebarImage.src = data.fotoURL;
+        usernameDisplay.textContent = data.username;
+        document.querySelector(`input[name="gender"][value="${data.gender}"]`).checked = true;
+      }
+    }
+  };
+</script>
+
+</body>
+</html>

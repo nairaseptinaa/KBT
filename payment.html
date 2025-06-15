@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Pembayaran | INKFINITY</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+      background: linear-gradient(to right top, #f0f4ff, #fafcff);
+      color: #1f2937;
+      padding: 2rem 1rem;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center">
+
+  <header class="text-center mb-10">
+    <h1 class="text-3xl font-extrabold text-blue-600 mb-1">Pembayaran</h1>
+    <p class="text-gray-600">Silakan lengkapi informasi pembayaran Anda</p>
+  </header>
+
+  <div class="w-full max-w-xl bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl p-8 border border-gray-200">
+    
+    <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+      <i class="fas fa-credit-card text-blue-500"></i> Metode Pembayaran
+    </h2>
+    <div id="payment-method" class="mb-6 px-4 py-2 rounded-lg bg-blue-100 text-blue-700 font-medium"></div>
+
+    <h3 class="text-lg font-semibold text-gray-800 mb-2">Informasi Pembayaran</h3>
+    <div id="payment-info" class="space-y-4 text-sm text-gray-700"></div>
+
+    <button id="confirm-payment"
+      class="mt-8 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-lg transition duration-300">
+      Konfirmasi Pembayaran
+    </button>
+  </div>
+
+  <script>
+    const orderData = JSON.parse(localStorage.getItem('orderData') || '{}');
+    const paymentMethod = localStorage.getItem('paymentMethod') || 'credit-card';
+    const methodEl = document.getElementById('payment-method');
+    const infoEl = document.getElementById('payment-info');
+
+    const formatLabel = (method) => {
+      switch (method) {
+        case 'credit-card': return 'Kartu Kredit';
+        case 'bank-transfer': return 'Transfer Bank';
+        case 'e-wallet': return 'Dompet Digital';
+        case 'cod': return 'Bayar di Tempat (COD)';
+        case 'paypal': return 'PayPal';
+        case 'gopay': return 'GoPay';
+        case 'ovo': return 'OVO';
+        default: return 'Tidak dikenali';
+      }
+    };
+    
+    methodEl.textContent = formatLabel(paymentMethod);
+
+    switch (paymentMethod) {
+      case 'credit-card':
+        infoEl.innerHTML = `
+          <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring focus:ring-blue-200" placeholder="Nomor Kartu Kredit" required>
+          <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring focus:ring-blue-200" placeholder="Nama Pemegang Kartu" required>
+          <div class="grid grid-cols-2 gap-4">
+            <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring focus:ring-blue-200" placeholder="MM/YY" required>
+            <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring focus:ring-blue-200" placeholder="CVV" required>
+          </div>
+        `;
+        break;
+      case 'bank-transfer':
+        infoEl.innerHTML = `
+          <p>Silakan transfer ke rekening berikut:</p>
+          <div class="bg-gray-100 p-4 rounded-lg mt-2">
+            <p><strong>Bank:</strong> ABC</p>
+            <p><strong>No. Rekening:</strong> 1234567890</p>
+            <p><strong>Atas Nama:</strong> INKFINITY</p>
+          </div>
+        `;
+        break;
+      case 'e-wallet':
+      case 'gopay':
+      case 'ovo':
+        infoEl.innerHTML = `
+          <p>Lakukan pembayaran melalui aplikasi <strong>${formatLabel(paymentMethod)}</strong> Anda.</p>
+          <div class="mt-2 text-sm text-gray-600">
+            Pastikan Anda menggunakan nomor terdaftar: <strong>0812-3456-7890</strong>
+          </div>
+        `;
+        break;
+      case 'cod':
+        infoEl.innerHTML = `
+          <p>Anda dapat membayar langsung kepada kurir saat barang sampai.</p>
+        `;
+        break;
+      case 'paypal':
+        infoEl.innerHTML = `
+          <p>Silakan lanjutkan pembayaran di akun PayPal Anda.</p>
+          <p class="text-sm text-gray-500 mt-2">Arahkan ke: <strong>paypal.me/inkfinity</strong></p>
+        `;
+        break;
+      default:
+        infoEl.innerHTML = `<p class="text-red-500">Metode pembayaran tidak dikenali.</p>`;
+    }
+
+    document.getElementById('confirm-payment').addEventListener('click', function () {
+      alert('Pembayaran berhasil diproses! Terima kasih atas pesanan Anda.');
+      window.location.href = 'thank-you.html';
+    });
+  </script>
+
+</body>
+</html>

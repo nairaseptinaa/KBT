@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>INKFINITY Cart</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+    }
+  </style>
+</head>
+
+<body class="bg-[#f5f8fb] text-[#1e293b] text-sm leading-relaxed">
+  <main class="max-w-[1200px] mx-auto px-4 py-6">
+    <!-- Header tabel -->
+    <div class="bg-white rounded-md shadow-sm flex items-center px-6 py-4 text-xs text-[#64748b]">
+      <label class="flex items-center gap-2 cursor-pointer select-none" for="select-all-top">
+        <input class="w-4 h-4 border border-[#cbd5e1] rounded-sm cursor-pointer" id="select-all-top" type="checkbox" />
+        Produk
+      </label>
+      <div class="flex-1"></div>
+      <div class="w-[120px] text-right">Harga Satuan</div>
+      <div class="w-[80px] text-right">Kuantitas</div>
+      <div class="w-[120px] text-right">Total Harga</div>
+      <div class="w-[80px] text-center">Aksi</div>
+    </div>
+
+    <!-- Isi keranjang -->
+    <div id="cart-items" class="mt-4 bg-white rounded-md shadow-sm">
+      <div class="text-center text-sm text-[#64748b] py-10 empty-cart">Keranjang Anda kosong.</div>
+    </div>
+
+    <!-- Footer -->
+    <div class="flex items-center gap-4 border-t border-[#e0e7ff] px-6 py-4 text-xs text-[#1e293b]">
+      <label class="flex items-center gap-2 cursor-pointer select-none" for="select-all-footer">
+        <input class="w-4 h-4 border border-[#cbd5e1] rounded-sm cursor-pointer" id="select-all-footer" type="checkbox" />
+        Pilih Semua
+      </label>
+      <button class="hover:underline text-[#1e293b]" id="delete-selected-btn">Hapus</button>
+      <button class="hover:underline text-[#1e293b]">Hapus produk dari Penjual tidak aktif</button>
+      <div class="flex-1"></div>
+      <button class="text-[#2563eb] hover:underline whitespace-nowrap">Tambahkan ke<br />Favorit Saya</button>
+      <div class="whitespace-nowrap font-semibold">
+        Total (<span id="selected-count">0</span> produk): <span class="text-[#2563eb]" id="total-price">Rp0</span>
+      </div>
+      <button id="checkout-btn" class="bg-[#2563eb] text-white rounded px-8 py-2 font-semibold hover:bg-[#1e40af]">Checkout</button>
+    </div>
+  </main>
+
+  <script>
+    const cartItems = document.getElementById("cart-items");
+    const selectedCountEl = document.getElementById("selected-count");
+    const totalPriceEl = document.getElementById("total-price");
+    const selectAllTop = document.getElementById("select-all-top");
+    const selectAllFooter = document.getElementById("select-all-footer");
+    const deleteSelectedBtn = document.getElementById("delete-selected-btn");
+    const checkoutBtn = document.getElementById("checkout-btn");
+
+    function formatRupiah(angka) {
+      return 'Rp' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    function updateTotals() {
+      let total = 0;
+      let count = 0;
+      document.querySelectorAll('.product-row').forEach(row => {
+        const checkbox = row.querySelector('.product-select');
+        const qty = parseInt(row.querySelector('.quantity-input').value);
+        const price = parseInt(row.dataset.price);
+        if (checkbox.checked) {
+          total += qty * price;
+          count++;
+        }
+        row.querySelector('.total-price').textContent = formatRupiah(qty * price);
+      });
+      selectedCountEl.textContent = count;
+      totalPriceEl.textContent = formatRupiah(total);
+      saveCartToLocalStorage();
+    }
+
+    function syncSelectAllCheckboxes() {
+      const checkboxes = document.querySelectorAll('.product-select');
+      const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+      selectAllTop.checked = checked === checkboxes.length && checkboxes.length > 0;
+      selectAllFooter.checked = selectAllTop.checked;
+    }
+
+    function attachEvents(row) {
+      const checkbox = row.querySelector('.product-select');
+      const qtyInput = row.querySelector('.quantity-input');
+      const btnMinus = row.querySelectorAll('.quantity-btn')[0];
+      const btnPlus = row.querySelectorAll('.quantity-btn')[1];
+      const removeBtn = row.querySelector('.btn-remove');
+
+      checkbox.addEventListener('change', () => {
+        updateTotals();
+        syncSelectAllCheckboxes();
+      });
+
+      btnMinus.addEventListener('click', () => {
+        let qty = parseInt(qtyInput.value);
+        if (qty > 1) qtyInput.value = qty - 1;
+        updateTotals();
+      });
+
+      btnPlus.addEventListener('click', () => {
+        qtyInput.value = parseInt(qtyInput.value) + 1;
+        updateTotals();
+      });
+
+      qtyInput.addEventListener('input', () => {
+        if (/^\d+$/.test(qtyInput.value) && parseInt(qtyInput.value) > 0) {
+          updateTotals();
+        } else {
+          qtyInput.value = 1;
+          updateTotals();
+        }
+      });
+
+      removeBtn.addEventListener('click', () => {
+        row.remove();
+        updateTotals();
+        syncSelectAllCheckboxes();
+      });
+    }
+
+    function addProductToCart(product) {
+      const existingEmpty = cartItems.querySelector(".empty-cart");
+      if (existingEmpty) existingEmpty.remove();
+
+      const row = document.createElement('div');
+      row.className = "flex items-center gap-4 border-t border-[#e0e7ff] px-4 py-4 product-row";
+      row.dataset.price = product.price;
+      row.innerHTML = `
+        <label class="flex items-center gap-4 cursor-pointer select-none w-[280px]">
+          <input type="checkbox" class="w-4 h-4 border border-[#cbd5e1] rounded-sm cursor-pointer product-select" />
+          <img src="${product.image}" alt="${product.productName || 'Tanpa Nama'}" class="flex-shrink-0" width="80" height="60" />
+          <div class="text-xs font-semibold leading-tight product-name">${product.productName || 'Tanpa Nama'}</div>
+        </label>
+        <div class="flex-1"></div>
+        <div class="w-[120px] text-right">${formatRupiah(product.price)}</div>
+        <div class="w-[80px] flex items-center justify-center gap-1 border border-[#cbd5e1] rounded text-xs">
+          <button class="quantity-btn w-6 h-6 flex items-center justify-center border-r border-[#cbd5e1] text-[#64748b]">−</button>
+          <input type="text" class="w-8 text-center outline-none quantity-input" value="${product.quantity}" />
+          <button class="quantity-btn w-6 h-6 flex items-center justify-center border-l border-[#cbd5e1] text-[#64748b]">+</button>
+        </div>
+        <div class="w-[120px] text-right text-[#2563eb] font-semibold total-price">${formatRupiah(product.price * product.quantity)}</div>
+        <div class="w-[80px] text-center text-xs text-[#2563eb] flex flex-col gap-1 cursor-pointer select-none">
+          <button class="hover:underline btn-remove">Hapus</button>
+        </div>
+      `;
+      cartItems.appendChild(row);
+      attachEvents(row);
+      updateTotals();
+    }
+
+    function saveCartToLocalStorage() {
+      const cartData = [];
+      document.querySelectorAll('.product-row').forEach(row => {
+        cartData.push({
+          productName: row.querySelector('.product-name')?.innerText || 'Tanpa Nama',
+          price: parseInt(row.dataset.price),
+          quantity: parseInt(row.querySelector('.quantity-input').value),
+          image: row.querySelector('img').src
+        });
+      });
+      localStorage.setItem('inkfinity-cart', JSON.stringify(cartData));
+    }
+
+    function loadCartFromLocalStorage() {
+      const savedCart = JSON.parse(localStorage.getItem('inkfinity-cart'));
+      if (savedCart && Array.isArray(savedCart)) {
+        savedCart.forEach(product => addProductToCart(product));
+      }
+    }
+
+    selectAllTop.addEventListener('change', () => {
+      document.querySelectorAll('.product-select').forEach(cb => cb.checked = selectAllTop.checked);
+      selectAllFooter.checked = selectAllTop.checked;
+      updateTotals();
+    });
+
+    selectAllFooter.addEventListener('change', () => {
+      document.querySelectorAll('.product-select').forEach(cb => cb.checked = selectAllFooter.checked);
+      selectAllTop.checked = selectAllFooter.checked;
+      updateTotals();
+    });
+
+    deleteSelectedBtn.addEventListener('click', () => {
+      document.querySelectorAll('.product-select:checked').forEach(cb => cb.closest('.product-row').remove());
+      updateTotals();
+      syncSelectAllCheckboxes();
+    });
+
+    checkoutBtn.addEventListener('click', () => {
+      const selectedProducts = [];
+      document.querySelectorAll('.product-row').forEach(row => {
+        const checkbox = row.querySelector('.product-select');
+        if (checkbox.checked) {
+          const productName = row.querySelector('.product-name')?.innerText || 'Tanpa Nama';
+          const price = parseInt(row.dataset.price);
+          const quantity = parseInt(row.querySelector('.quantity-input').value);
+          const image = row.querySelector('img').src;
+          selectedProducts.push({ productName, price, quantity, image });
+        }
+      });
+
+      if (selectedProducts.length === 0) {
+        alert("Silakan pilih produk yang ingin dibeli.");
+        return;
+      }
+
+      localStorage.setItem('selectedProducts', JSON.stringify(selectedProducts));
+      window.location.href = 'checkout.html';
+    });
+
+    loadCartFromLocalStorage();
+  </script>
+</body>
+</html>

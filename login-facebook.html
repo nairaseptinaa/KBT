@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login dengan Facebook - INKFINITY</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&amp;display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #1877f2 0%, #4a90e2 100%);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+      color: white;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+      padding: 2rem 3rem;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 8px 30px rgba(24, 117, 242, 0.7);
+      text-align: center;
+    }
+
+    h1 {
+      font-weight: 800;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    }
+
+    p.lead {
+      font-size: 1.125rem;
+      margin-bottom: 2rem;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    }
+
+    #fb-login-btn {
+      background-color: #1877f2;
+      color: white;
+      font-weight: 700;
+      font-size: 1.125rem;
+      padding: 0.75rem 2.5rem;
+      border-radius: 0.75rem;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      box-shadow: 0 10px 20px rgba(24, 119, 242, 0.6);
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    #fb-login-btn:hover {
+      background-color: #135ab6;
+      box-shadow: 0 14px 30px rgba(19, 90, 182, 0.8);
+      transform: translateY(-4px);
+    }
+
+    #fb-login-btn:active {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(19, 90, 182, 0.7);
+    }
+
+    #fb-login-btn i {
+      font-size: 1.5rem;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+    }
+
+    #user-info {
+      margin-top: 2rem;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      display: none;
+      text-align: left;
+    }
+
+    #user-info h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #FFCA28;
+      margin-bottom: 1rem;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    }
+
+    #user-info p {
+      font-size: 1.125rem;
+      margin-bottom: 0.5rem;
+      color: #f0f0f0;
+    }
+
+    #user-pic {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      border: 4px solid #FFCA28;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      margin-bottom: 1rem;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="main">
+    <h1>Selamat Datang di INKFINITY</h1>
+    <p class="lead">
+      Masuk dengan akun Facebook Anda dengan mudah dan aman.
+    </p>
+    <button id="fb-login-btn" aria-label="Masuk dengan Facebook">
+      <i class="fab fa-facebook-f"></i> Masuk dengan Facebook
+    </button>
+    <div id="user-info" aria-live="polite" aria-atomic="true" aria-relevant="additions removals">
+      <img id="user-pic" alt="Foto Profil Pengguna" />
+      <h2>Informasi Pengguna</h2>
+      <p><strong>Nama:</strong> <span id="user-name">-</span></p>
+      <p><strong>Email:</strong> <span id="user-email">-</span></p>
+      <button id="logout-btn" aria-label="Keluar dari Facebook" 
+        style="margin-top:1.5rem; background:#d32f2f; color:#fff; border:none; padding:0.75rem 2rem; 
+        border-radius:0.5rem; font-weight:700; cursor:pointer; width:100%; font-size:1.125rem; transition:background-color 0.3s;">
+        Keluar
+      </button>
+    </div>
+  </div>
+
+  <!-- Facebook SDK -->
+  <script>
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: 'YOUR_APP_ID', // Ganti dengan App ID Facebook Anda
+        cookie: true,
+        xfbml: false,
+        version: 'v16.0',
+      });
+      FB.AppEvents.logPageView();
+    };
+
+    (function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/id_ID/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    const fbLoginBtn = document.getElementById('fb-login-btn');
+    const userInfoDiv = document.getElementById('user-info');
+    const userNameSpan = document.getElementById('user-name');
+    const userEmailSpan = document.getElementById('user-email');
+    const userPicImg = document.getElementById('user-pic');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    function displayUserInfo(user) {
+      userNameSpan.textContent = user.name || 'Tidak tersedia';
+      userEmailSpan.textContent = user.email || 'Tidak tersedia';
+      if(user.picture && user.picture.data && user.picture.data.url){
+        userPicImg.src = user.picture.data.url;
+        userPicImg.alt = `${user.name} - Foto Profil`;
+      } else {
+        userPicImg.src = '';
+        userPicImg.alt = 'Foto Profil tidak tersedia';
+      }
+      userInfoDiv.style.display = 'block';
+      fbLoginBtn.style.display = 'none';
+    }
+
+    function resetLogin() {
+      userInfoDiv.style.display = 'none';
+      fbLoginBtn.style.display = 'inline-flex';
+      userNameSpan.textContent = '-';
+      userEmailSpan.textContent = '-';
+      userPicImg.src = '';
+      userPicImg.alt = 'Foto Profil Pengguna';
+    }
+
+    fbLoginBtn.addEventListener('click', () => {
+      FB.login(function(response) {
+        if (response.authResponse) {
+          FB.api('/me', { fields: 'name,email,picture' }, function(user) {
+            displayUserInfo(user);
+            // Simpan data pengguna di localStorage jika perlu
+            localStorage.setItem('fbUser', JSON.stringify(user));
+            // Contoh redirect ke halaman utama setelah login
+            // window.location.href = 'index.html';
+          });
+        } else {
+          alert('Login Facebook dibatalkan atau gagal.');
+        }
+      }, { scope: 'email' });
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      FB.logout(function(response) {
+        resetLogin();
+        localStorage.removeItem('fbUser');
+        alert('Anda telah logout.');
+      });
+    });
+
+    // Otomatis cek apakah user sudah login sebelumnya
+    window.onload = function() {
+      const savedUserJSON = localStorage.getItem('fbUser');
+      if(savedUserJSON){
+        const user = JSON.parse(savedUserJSON);
+        displayUserInfo(user);
+      }
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth" >
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>Chat Room - Seller & Buyer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
+      color: #6b7280;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Header styles */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: white;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+    }
+    header h1 {
+      font-weight: 700;
+      font-size: 1.75rem;
+      color: #111827;
+      user-select: none;
+    }
+    header nav a {
+      font-weight: 600;
+      color: #2563eb;
+      margin-left: 1.5rem;
+      transition: color 0.3s ease;
+    }
+    header nav a:hover,
+    header nav a:focus {
+      color: #1e40af;
+      outline: none;
+    }
+
+    /* Layout container */
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      max-width: 1200px;
+      margin: 2rem auto 3rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      border-radius: 12px;
+      overflow: hidden;
+      height: 80vh;
+    }
+
+    /* Sidebar (Contacts) */
+    aside.contacts {
+      background: #f9fafb;
+      border-right: 1px solid #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem 0;
+    }
+
+    .contacts-header {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #111827;
+      padding: 0 1rem 1rem;
+      border-bottom: 1px solid #e5e7eb;
+      user-select: none;
+    }
+
+    .search-input {
+      margin: 0 1rem 1rem;
+      width: calc(100% - 2rem);
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      border: 1px solid #d1d5db;
+      border-radius: 9999px;
+      transition: border-color 0.3s ease;
+      outline-offset: 2px;
+    }
+    .search-input:focus {
+      border-color: #2563eb;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+    }
+
+    .contact-list {
+      flex: 1;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 transparent;
+      padding: 0 0.5rem;
+    }
+    .contact-list::-webkit-scrollbar {
+      width: 8px;
+    }
+    .contact-list::-webkit-scrollbar-thumb {
+      background-color: #cbd5e1;
+      border-radius: 9999px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      transition: background-color 0.25s ease, box-shadow 0.25s ease;
+      user-select: none;
+    }
+    .contact-item:hover,
+    .contact-item:focus-visible {
+      background-color: #e0e7ff;
+      outline: none;
+      box-shadow: 0 0 6px rgba(37, 99, 235, 0.3);
+    }
+    .contact-item.active {
+      background-color: #2563eb;
+      color: white;
+      font-weight: 700;
+      box-shadow: 0 0 10px rgba(37, 99, 235, 0.6);
+    }
+
+    .contact-avatar {
+      flex-shrink: 0;
+      height: 42px;
+      width: 42px;
+      border-radius: 9999px;
+      object-fit: cover;
+    }
+
+    .contact-info {
+      flex: 1;
+      font-size: 0.95rem;
+      overflow: hidden;
+    }
+    .contact-name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: inherit;
+    }
+    .contact-last-message {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      margin-top: 2px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    /* Chat area */
+    section.chat-area {
+      display: flex;
+      flex-direction: column;
+      background: white;
+      position: relative;
+    }
+
+    .chat-header {
+      flex-shrink: 0;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      user-select: none;
+    }
+    .chat-header .chat-avatar {
+      height: 48px;
+      width: 48px;
+      border-radius: 9999px;
+      object-fit: cover;
+      border: 2px solid #2563eb;
+    }
+    .chat-header .chat-name {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #111827;
+    }
+    .chat-header .status-indicator {
+      height: 12px;
+      width: 12px;
+      border-radius: 9999px;
+      background-color: #34d399; /* green */
+      border: 2px solid white;
+      box-shadow: 0 0 8px #34d399aa;
+      position: relative;
+      top: -1px;
+      margin-left: 0.25rem;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem 2rem;
+      background: #f9fafb;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 transparent;
+    }
+    .chat-messages::-webkit-scrollbar {
+      width: 8px;
+    }
+    .chat-messages::-webkit-scrollbar-thumb {
+      background-color: #cbd5e1;
+      border-radius: 9999px;
+    }
+
+    /* Messages */
+    .message {
+      max-width: 75%;
+      padding: 0.6rem 1rem;
+      border-radius: 1rem;
+      font-size: 0.95rem;
+      line-height: 1.3;
+      position: relative;
+      word-break: break-word;
+      user-select: text;
+    }
+    .message.sender {
+      background: #2563eb;
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 0.25rem;
+      box-shadow: 0 2px 6px rgb(37 99 235 / 0.5);
+      animation: fadeInUp 0.3s ease forwards;
+    }
+    .message.receiver {
+      background: #e5e7eb;
+      color: #374151;
+      border-bottom-left-radius: 0.25rem;
+      align-self: flex-start;
+      animation: fadeInUp 0.3s ease forwards;
+    }
+    .message .timestamp {
+      font-size: 0.7rem;
+      color: rgba(255 255 255 / 0.7);
+      position: absolute;
+      bottom: 0.2rem;
+      right: 0.75rem;
+      user-select: none;
+    }
+    .message.receiver .timestamp {
+      color: #6b7280;
+      right: auto;
+      left: 0.75rem;
+    }
+
+    /* Sent and received files previews */
+    .message.file {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .file-preview {
+      background: rgba(255 255 255 / 0.3);
+      border-radius: 0.5rem;
+      padding: 0.25rem;
+      max-width: 400px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: border-color 0.2s ease;
+      color: white;
+    }
+    .message.receiver .file-preview {
+      color: #374151;
+      background: #e5e7eb;
+    }
+    .file-preview:hover,
+    .file-preview:focus {
+      border-color: #2563eb;
+      outline: none;
+    }
+    .file-icon {
+      flex-shrink: 0;
+      font-size: 1.7rem;
+    }
+    .file-name {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+    .file-size {
+      font-size: 0.75rem;
+      color: rgba(255 255 255 / 0.7);
+      flex-shrink: 0;
+    }
+    .message.receiver .file-size {
+      color: #6b7280;
+    }
+
+    /* Chat input area */
+    form.chat-input {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid #e5e7eb;
+      background: white;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      user-select: none;
+    }
+    textarea#message-input {
+      flex: 1;
+      resize: none;
+      min-height: 40px;
+      max-height: 120px;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      border-radius: 0.75rem;
+      border: 1px solid #d1d5db;
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.3s ease;
+      outline-offset: 2px;
+    }
+    textarea#message-input:focus {
+      border-color: #2563eb;
+      outline: none;
+      box-shadow: 0 0 5px #2563ebaa;
+    }
+
+    /* File upload button styled */
+    label.file-upload-label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      border-radius: 9999px;
+      padding: 0.45rem 0.7rem;
+      border: 1.5px solid #d1d5db;
+      color: #6b7280;
+      transition: border-color 0.3s ease, color 0.3s ease;
+    }
+    label.file-upload-label:hover,
+    label.file-upload-label:focus-visible {
+      border-color: #2563eb;
+      color: #2563eb;
+      outline: none;
+      box-shadow: 0 0 5px #2563ebaa;
+    }
+    label.file-upload-label i {
+      font-size: 1.25rem;
+    }
+    
+    input#file-input {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    button.send-button {
+      background-color: #2563eb;
+      color: white;
+      font-weight: 700;
+      border-radius: 9999px;
+      padding: 0.5rem 1.25rem;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    button.send-button:disabled {
+      background-color: #93c5fd;
+      cursor: not-allowed;
+    }
+    button.send-button:hover:not(:disabled),
+    button.send-button:focus:not(:disabled) {
+      background-color: #1e40af;
+      outline: none;
+    }
+
+    /* Scroll-to-bottom button */
+    #scroll-bottom-btn {
+      position: absolute;
+      bottom: 80px;
+      right: 1.5rem;
+      background: #2563eb;
+      color: white;
+      border-radius: 9999px;
+      padding: 0.35rem 0.75rem;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: none;
+      user-select: none;
+      box-shadow: 0 2px 6px rgba(37,99,235,0.5);
+      transition: opacity 0.3s ease;
+      z-index: 10;
+    }
+    #scroll-bottom-btn.show {
+      display: block;
+      opacity: 1;
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      100% {
+        opacity:1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      main {
+        grid-template-columns: 1fr;
+        height: 100vh;
+        margin: 0;
+        border-radius: 0;
+      }
+      aside.contacts {
+        max-height: 160px;
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+        overflow-x: auto;
+        padding: 0.5rem 1rem;
+      }
+      .contact-item {
+        flex-direction: column;
+        min-width: 120px;
+        text-align: center;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+      }
+      .contact-avatar {
+        margin-bottom: 0.25rem;
+      }
+      .contact-info {
+        font-size: 0.85rem;
+      }
+      section.chat-area {
+        height: calc(100vh - 160px - 56px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Inkfinity Chat</h1>
+    <nav>
+      <a href="#" tabindex="0">Beranda</a>
+      <a href="#" tabindex="0">Pesanan</a>
+      <a href="#" tabindex="0">Bantuan</a>
+    </nav>
+  </header>
+
+  <main>
+    <aside class="contacts" aria-label="Daftar kontak">
+      <div class="contacts-header" tabindex="0">Kontak</div>
+      <input type="search" aria-label="Cari kontak" class="search-input" placeholder="Cari nama..." id="contact-search" />
+      <div class="contact-list" role="list" id="contact-list" tabindex="0" aria-live="polite" aria-relevant="additions removals">
+        <!-- Contacts inserted here dynamically -->
+      </div>
+    </aside>
+
+    <section class="chat-area" aria-label="Area percakapan" role="region" aria-live="polite" aria-atomic="false">
+      <div class="chat-header">
+        <img src="" alt="Avatar kontak" class="chat-avatar" id="chat-avatar" />
+        <div class="chat-name" id="chat-name">Pilih kontak untuk mulai chat</div>
+        <span class="status-indicator" id="chat-status" hidden></span>
+      </div>
+      <div class="chat-messages" id="chat-messages" tabindex="0" aria-label="Pesan chat">
+        <!-- Messages go here -->
+        <p class="empty-message" id="empty-chat">Tidak ada pesan, mulai ngobrol!</p>
+      </div>
+      <form class="chat-input" id="chat-form" aria-label="Form kirim pesan" novalidate>
+        <label for="message-input" class="sr-only">Tulis pesanmu</label>
+        <textarea id="message-input" rows="1" placeholder="Tulis pesan..." autocomplete="off" aria-multiline="true" required></textarea>
+        <label for="file-input" class="file-upload-label" tabindex="0" title="Upload file atau foto" aria-label="Upload file atau foto">
+          <i class="fa-solid fa-paperclip"></i>
+        </label>
+        <input type="file" id="file-input" accept="image/*,application/pdf,.doc,.docx,.xls,.xlsx,.txt" multiple />
+        <button type="submit" id="send-button" class="send-button" disabled>Kirim</button>
+      </form>
+      <button id="scroll-bottom-btn" aria-label="Scroll ke pesan terbaru">Terbaru ↓</button>
+    </section>
+  </main>
+
+  <script>
+    // Data: sample contacts - sellers and buyers with id, name, avatar, last message, online status
+    const contacts = [
+      {
+        id: 'seller-1',
+        name: 'Toko Merpati',
+        avatar: 'https://randomuser.me/api/portraits/men/11.jpg',
+        lastMessage: 'Terima kasih atas pesanan Anda!',
+        online: true,
+        messages: [
+          { sender: 'seller', text: 'Terima kasih atas pesanan Anda!', time: '09:15' },
+          { sender: 'buyer', text: 'Apakah produk sudah dikirim?', time: '09:20' }
+        ]
+      },
+      {
+        id: 'buyer-1',
+        name: 'Sari Cahaya',
+        avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+        lastMessage: 'Saya ingin update status pengiriman.',
+        online: false,
+        messages: [
+          { sender: 'buyer', text: 'Saya ingin update status pengiriman.', time: 'Kemarin 14:10'},
+          { sender: 'seller', text: 'Segera kami proses ya.', time: 'Kemarin 14:25' }
+        ]
+      },
+      {
+        id: 'seller-2',
+        name: 'Toko Kencana',
+        avatar: 'https://randomuser.me/api/portraits/men/72.jpg',
+        lastMessage: 'Apakah Anda memerlukan bantuan?',
+        online: true,
+        messages: [
+          { sender: 'seller', text: 'Apakah Anda memerlukan bantuan?', time: '11:00' }
+        ]
+      },
+      {
+        id: 'buyer-2',
+        name: 'Agus Santoso',
+        avatar: 'https://randomuser.me/api/portraits/men/63.jpg',
+        lastMessage: 'Terima kasih atas jawabannya.',
+        online: false,
+        messages: [
+          { sender: 'buyer', text: 'Terima kasih atas jawabannya.', time: 'Kemarin 16:45' }
+        ]
+      }
+    ];
+
+    // State
+    let currentContactId = null;
+
+    // DOM Elements
+    const contactListEl = document.getElementById('contact-list');
+    const contactSearchEl = document.getElementById('contact-search');
+    const chatNameEl = document.getElementById('chat-name');
+    const chatAvatarEl = document.getElementById('chat-avatar');
+    const chatStatusEl = document.getElementById('chat-status');
+    const chatMessagesEl = document.getElementById('chat-messages');
+    const chatForm = document.getElementById('chat-form');
+    const messageInput = document.getElementById('message-input');
+    const fileInput = document.getElementById('file-input');
+    const sendButton = document.getElementById('send-button');
+    const scrollBottomBtn = document.getElementById('scroll-bottom-btn');
+
+    // Utility: Format current time HH:mm
+    function formatTime(date = new Date()) {
+      const h = date.getHours().toString().padStart(2, '0');
+      const m = date.getMinutes().toString().padStart(2, '0');
+      return `${h}:${m}`;
+    }
+
+    // Render contact list
+    function renderContacts(filter = '') {
+      contactListEl.innerHTML = '';
+
+      const filtered = contacts.filter(c => c.name.toLowerCase().includes(filter.toLowerCase()));
+
+      if (filtered.length === 0) {
+        const noResult = document.createElement('p');
+        noResult.textContent = 'Kontak tidak ditemukan.';
+        noResult.className = 'p-4 text-center text-sm text-gray-400 select-none';
+        contactListEl.appendChild(noResult);
+        return;
+      }
+
+      filtered.forEach(contact => {
+        const isActive = contact.id === currentContactId;
+        const item = document.createElement('button');
+        item.type = 'button';
+        item.className = 'contact-item' + (isActive ? ' active' : '');
+        item.setAttribute('role', 'listitem');
+        item.setAttribute('aria-current', isActive ? 'true' : 'false');
+        item.tabIndex = 0;
+
+        item.innerHTML = `
+          <img class="contact-avatar" src="${contact.avatar}" alt="Avatar ${contact.name}" />
+          <div class="contact-info" title="${contact.name}">
+            <div class="contact-name">${contact.name}</div>
+            <div class="contact-last-message">${contact.lastMessage || ''}</div>
+          </div>
+          ${contact.online ? '<span title="Online" class="status-indicator"></span>' : ''}
+        `;
+
+        item.addEventListener('click', () => {
+          selectContact(contact.id);
+        });
+
+        contactListEl.appendChild(item);
+      });
+    }
+
+    // Render chat messages for current contact
+    function renderMessages() {
+      chatMessagesEl.innerHTML = '';
+
+      if (!currentContactId) {
+        chatNameEl.textContent = 'Pilih kontak untuk mulai chat';
+        chatAvatarEl.src = '';
+        chatAvatarEl.alt = 'Avatar kontak';
+        chatStatusEl.hidden = true;
+        chatMessagesEl.innerHTML = '<p class="empty-message">Tidak ada pesan, mulai ngobrol!</p>';
+        return;
+      }
+
+      const contact = contacts.find(c => c.id === currentContactId);
+      if (!contact) return;
+
+      chatNameEl.textContent = contact.name;
+      chatAvatarEl.src = contact.avatar;
+      chatAvatarEl.alt = `Avatar ${contact.name}`;
+      chatStatusEl.hidden = !contact.online;
+
+      if (!contact.messages || contact.messages.length === 0) {
+        chatMessagesEl.innerHTML = '<p class="empty-message">Tidak ada pesan, mulai ngobrol!</p>';
+        return;
+      }
+
+      contact.messages.forEach(msg => {
+        const div = document.createElement('div');
+        div.classList.add('message');
+        div.classList.add(msg.sender === 'buyer' ? 'sender' : 'receiver');
+
+        if(msg.type === 'file'){
+          // File message
+          const fileUrl = msg.url || '#';
+          const fileName = msg.fileName || 'File';
+          const fileSize = msg.fileSize || '';
+          div.classList.add('file');
+          div.innerHTML = `
+            <a href="${fileUrl}" target="_blank" rel="noopener" class="file-preview" tabindex="0">
+              <i class="fa-solid fa-file-arrow-down file-icon"></i>
+              <div class="file-name" title="${fileName}">${fileName}</div>
+              ${fileSize ? `<div class="file-size">${fileSize}</div>` : ''}
+            </a>
+            <div class="timestamp">${msg.time}</div>
+          `;
+        } else {
+          // Text message
+          div.textContent = msg.text;
+          const timeSpan = document.createElement('span');
+          timeSpan.className = 'timestamp';
+          timeSpan.textContent = msg.time;
+          div.appendChild(timeSpan);
+        }
+
+        chatMessagesEl.appendChild(div);
+      });
+
+      scrollChatToBottom();
+    }
+
+    // Scroll chat to bottom
+    function scrollChatToBottom() {
+      chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+      scrollBottomBtn.classList.remove('show');
+    }
+
+    // Select contact and render
+    function selectContact(id) {
+      if(currentContactId === id) return;
+      currentContactId = id;
+      renderContacts(contactSearchEl.value);
+      renderMessages();
+      messageInput.value = '';
+      sendButton.disabled = true;
+    }
+
+    // Handle sending message (text or files)
+    function sendMessage(event) {
+      event.preventDefault();
+      if(!currentContactId) return alert('Pilih kontak terlebih dahulu.');
+
+      const contact = contacts.find(c => c.id === currentContactId);
+      if(!contact) return;
+
+      let files = fileInput.files;
+      const msgsToSend = [];
+
+      // Handle files if any
+      if(files.length > 0){
+        for(let i=0; i<files.length; i++){
+          const file = files[i];
+          // Generate a temporary URL for display; normally you'd upload to server
+          const fileURL = URL.createObjectURL(file);
+          msgsToSend.push({
+            sender: 'buyer',
+            type: 'file',
+            url: fileURL,
+            fileName: file.name,
+            fileSize: formatFileSize(file.size),
+            time: formatTime(),
+          });
+        }
+        fileInput.value = ''; // reset file input
+      }
+
+      // Handle text message if any
+      const text = messageInput.value.trim();
+      if(text){
+        msgsToSend.push({
+          sender: 'buyer',
+          type: 'text',
+          text,
+          time: formatTime()
+        });
+        messageInput.value = '';
+      }
+
+      if(msgsToSend.length === 0) return;
+
+      // Append messages to contact
+      contact.messages.push(...msgsToSend);
+      contact.lastMessage = msgsToSend[msgsToSend.length -1].type === 'text' ? msgsToSend[msgsToSend.length -1].text : 'Mengirim file';
+      renderContacts(contactSearchEl.value);
+      renderMessages();
+      sendButton.disabled = true;
+    }
+
+    // Format file size helper
+    function formatFileSize(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+      else if (bytes < 1073741824) return (bytes / 1048576).toFixed(1) + ' MB';
+      else return (bytes / 1073741824).toFixed(1) + ' GB';
+    }
+
+    // Filter contacts on search input
+    contactSearchEl.addEventListener('input', (e) => {
+      renderContacts(e.target.value);
+    });
+
+    // Enable or disable send button based on input or file selected
+    function validateSendButton(){
+      const textHasValue = messageInput.value.trim().length > 0;
+      const filesSelected = fileInput.files.length > 0;
+      sendButton.disabled = !textHasValue && !filesSelected;
+    }
+
+    messageInput.addEventListener('input', validateSendButton);
+    fileInput.addEventListener('change', validateSendButton);
+
+    // Scroll chat messages event to manage scroll-to-bottom button visibility
+    chatMessagesEl.addEventListener('scroll', () => {
+      const nearBottom = chatMessagesEl.scrollHeight - chatMessagesEl.scrollTop - chatMessagesEl.clientHeight < 64;
+      if(!nearBottom){
+        scrollBottomBtn.classList.add('show');
+      } else {
+        scrollBottomBtn.classList.remove('show');
+      }
+    });
+
+    scrollBottomBtn.addEventListener('click', () => {
+      scrollChatToBottom();
+      scrollBottomBtn.classList.remove('show');
+      messageInput.focus();
+    });
+
+    // Keyboard shortcuts, ctrl+enter to send message
+    messageInput.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' && !e.shiftKey){
+        e.preventDefault();
+        if(!sendButton.disabled){
+          sendButton.click();
+        }
+      }
+    });
+
+    // Initialize
+    window.addEventListener('DOMContentLoaded', () => {
+      renderContacts();
+      renderMessages();
+    });
+
+    // Submit chat form
+    chatForm.addEventListener('submit', sendMessage);
+
+  </script>
+
+</body>
+</html>
+

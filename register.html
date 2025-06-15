@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>INKFINITY Daftar</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+    }
+  </style>
+
+  <!-- Firebase SDK (modular) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDhimkPplFDgAk5jLXh-ZMtvh1w6d2hWxc",
+      authDomain: "inkfinity-project.firebaseapp.com",
+      projectId: "inkfinity-project",
+      storageBucket: "inkfinity-project.appspot.com",
+      messagingSenderId: "177359193295",
+      appId: "1:177359193295:web:6298a57e48db72da5263ba",
+      measurementId: "G-R4L6BYGFBC"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    window.firebaseObj = { auth, db, createUserWithEmailAndPassword, setDoc, doc };
+  </script>
+</head>
+
+<body class="bg-white">
+  <header class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
+    <div class="flex items-center space-x-1">
+      <img class="w-6 h-6" src="https://storage.googleapis.com/a1aa/image/939a9afa-d3a6-4387-3f19-e9eef36c94d8.jpg" alt="Logo"/>
+      <span class="text-[#2563EB] font-normal text-lg">INKFINITY</span>
+      <span class="text-black text-lg font-normal">Daftar</span>
+    </div>
+    <a class="text-[#2563EB] text-sm font-normal" href="#">Butuh bantuan?</a>
+  </header>
+
+  <main class="bg-[#2563EB] flex flex-col md:flex-row items-center justify-center min-h-[calc(100vh-64px)] px-6 md:px-0">
+    <section class="text-white text-center md:text-left md:mr-20 max-w-xs md:max-w-none">
+      <p class="mb-4 font-semibold text-lg">Layanan Cetak di</p>
+      <img class="mx-auto md:mx-0 mb-2" src="https://storage.googleapis.com/a1aa/image/939a9afa-d3a6-4387-3f19-e9eef36c94d8.jpg" width="96" height="96" />
+      <p class="mb-4 font-semibold text-2xl">INKFINITY</p>
+    </section>
+
+    <section>
+      <form id="register-form" class="bg-white rounded-md shadow-md p-6 w-full max-w-sm mt-10 md:mt-0">
+        <h2 class="text-black text-lg font-normal mb-4">Daftar</h2>
+
+        <input id="fullname" name="fullname" class="w-full border border-gray-300 rounded px-3 py-2 mb-4 placeholder-gray-400" placeholder="Nama Lengkap" required />
+        <input id="username" name="username" class="w-full border border-gray-300 rounded px-3 py-2 mb-4 placeholder-gray-400" placeholder="Username" required />
+        <input id="phone" name="phone" class="w-full border border-gray-300 rounded px-3 py-2 mb-4 placeholder-gray-400" placeholder="Nomor Telepon" required type="tel" />
+        <input id="email" name="email" class="w-full border border-gray-300 rounded px-3 py-2 mb-4 placeholder-gray-400" placeholder="Email" required type="email" />
+        <input id="password" name="password" class="w-full border border-gray-300 rounded px-3 py-2 mb-4 placeholder-gray-400" placeholder="Password" minlength="6" required type="password" />
+
+        <button type="submit" class="w-full bg-[#3B82F6] text-white font-bold py-3 rounded mb-6 hover:bg-[#2563EB] transition-colors">BERIKUTNYA</button>
+
+        <div class="flex items-center mb-6">
+          <hr class="flex-grow border-t border-gray-300"/>
+          <span class="mx-3 text-gray-400 text-xs">ATAU</span>
+          <hr class="flex-grow border-t border-gray-300"/>
+        </div>
+
+        <div class="flex space-x-4 mb-6">
+          <button type="button" class="flex items-center justify-center border border-gray-300 rounded w-1/2 py-2 text-gray-700 hover:bg-gray-100">
+            <i class="fab fa-facebook-f text-blue-700 mr-2"></i> Facebook
+          </button>
+          <button type="button" class="flex items-center justify-center border border-gray-300 rounded w-1/2 py-2 text-gray-700 hover:bg-gray-100">
+            <img alt="Google logo" class="mr-2" src="https://storage.googleapis.com/a1aa/image/1c3332af-2637-4532-f0f9-5e221ddf4ad0.jpg" width="16" height="16" />
+            Google
+          </button>
+        </div>
+
+        <p class="text-center text-gray-400 text-xs font-normal">
+          Punya akun? <a class="text-[#2563EB] font-bold" href="login.html">Log in</a>
+        </p>
+      </form>
+    </section>
+  </main>
+
+  <!-- Script Registrasi -->
+  <script type="module">
+    const form = document.getElementById('register-form');
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const fullname = form.fullname.value.trim();
+      const username = form.username.value.trim().toLowerCase();
+      const phone = form.phone.value.trim();
+      const email = form.email.value.trim().toLowerCase();
+      const password = form.password.value;
+
+      if (!fullname || !username || !phone || !email || !password) {
+        alert('Semua kolom harus diisi.');
+        return;
+      }
+
+      if (password.length < 6) {
+        alert('Password minimal 6 karakter.');
+        return;
+      }
+
+      const { auth, db, createUserWithEmailAndPassword, setDoc, doc } = window.firebaseObj;
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        await setDoc(doc(db, "users", user.uid), {
+          uid: user.uid,
+          fullname,
+          username,
+          phone,
+          email,
+          photo: "https://via.placeholder.com/24",
+          createdAt: new Date().toISOString()
+        });
+
+        alert("Pendaftaran berhasil! Silakan login.");
+        window.location.href = "login.html";
+      } catch (error) {
+        console.error("Error saat daftar:", error);
+        alert("Gagal mendaftar: " + error.message);
+      }
+    });
+  </script>
+</body>
+</html>

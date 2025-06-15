@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>Inkfinity Log in</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-white">
+
+  <!-- Header -->
+  <header class="flex justify-between items-center max-w-7xl mx-auto px-6 py-4">
+    <div class="flex items-center space-x-1">
+      <img alt="Inkfinity logo" class="w-6 h-6" src="https://storage.googleapis.com/a1aa/image/56e19bc9-517f-401e-cae6-d9d0d4aeb9e2.jpg" />
+      <span class="text-blue-600 font-normal text-lg">Inkfinity</span>
+      <span class="text-black text-lg font-normal">Log in</span>
+    </div>
+    <a class="text-blue-600 text-sm hover:underline" href="#">Butuh bantuan?</a>
+  </header>
+
+  <!-- Main Content -->
+  <main class="bg-blue-600 flex justify-center items-center min-h-[calc(100vh-64px)] px-6">
+    <div class="max-w-7xl w-full flex flex-col md:flex-row justify-center items-center gap-20 md:gap-40">
+
+      <!-- Promo -->
+      <div class="text-center md:text-left text-white max-w-xs md:max-w-[280px]">
+        <p class="font-semibold text-base mb-2">Layanan Cetak di</p>
+        <img class="mx-auto md:mx-0 mb-2" src="https://storage.googleapis.com/a1aa/image/939a9afa-d3a6-4387-3f19-e9eef36c94d8.jpg" width="96" height="96" />
+        <p class="mb-4 font-semibold text-2xl">INKFINITY</p>
+        <p class="font-normal text-base">Cepat, Mudah, dan Terpercaya</p>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" class="bg-white rounded-md shadow-md p-6 w-full max-w-sm">
+        <h2 class="text-black text-lg font-normal mb-4">Log in</h2>
+        <input id="login-identifier" class="w-full border border-gray-300 rounded-md px-3 py-2 mb-4" placeholder="No. HP / Email / Username" type="text" required/>
+        <div class="relative mb-6">
+          <input id="login-password" class="w-full border border-gray-300 rounded-md px-3 py-2" placeholder="Password" type="password" required/>
+          <i class="fas fa-eye-slash absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer" id="toggle-password"></i>
+        </div>
+        <button class="w-full bg-blue-500 text-white font-semibold py-2 rounded-md mb-3 hover:bg-blue-600" type="submit">LOG IN</button>
+        <a class="text-blue-700 text-xs block text-center mb-4 hover:underline" href="#">Lupa Password</a>
+
+        <div class="flex items-center justify-center mb-6">
+          <div class="border-t border-gray-300 flex-grow"></div>
+          <span class="mx-4 text-gray-400 text-xs">ATAU</span>
+          <div class="border-t border-gray-300 flex-grow"></div>
+        </div>
+
+        <div class="flex gap-4 mb-6">
+          <a href="#" class="flex items-center justify-center gap-2 border border-gray-300 rounded-md py-2 flex-1 hover:bg-gray-100">
+            <img alt="Facebook" class="w-4 h-4" src="https://storage.googleapis.com/a1aa/image/b8fa1601-a02d-4963-936f-c5a48cf364c6.jpg" />
+            <span class="text-sm text-black">Facebook</span>
+          </a>
+          <a href="#" class="flex items-center justify-center gap-2 border border-gray-300 rounded-md py-2 flex-1 hover:bg-gray-100">
+            <img alt="Google" class="w-4 h-4" src="https://storage.googleapis.com/a1aa/image/e88dfd04-646c-4543-eecb-95335428c1d3.jpg" />
+            <span class="text-sm text-black">Google</span>
+          </a>
+        </div>
+
+        <p class="text-center text-sm text-gray-700">
+          Belum punya akun?
+          <a href="register.html" class="text-blue-600 hover:underline">Daftar sekarang</a>
+        </p>
+      </form>
+    </div>
+  </main>
+
+  <!-- Firebase + Login Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, collection, getDocs, query, where, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDhimkPplFDgAk5jLXh-ZMtvh1w6d2hWxc",
+      authDomain: "inkfinity-project.firebaseapp.com",
+      projectId: "inkfinity-project",
+      storageBucket: "inkfinity-project.appspot.com",
+      messagingSenderId: "177359193295",
+      appId: "1:177359193295:web:6298a57e48db72da5263ba",
+      measurementId: "G-R4L6BYGFBC"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    document.getElementById('toggle-password').addEventListener('click', function () {
+      const input = document.getElementById('login-password');
+      const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+      input.setAttribute('type', type);
+      this.classList.toggle('fa-eye');
+      this.classList.toggle('fa-eye-slash');
+    });
+
+    document.getElementById('login-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const identifier = document.getElementById('login-identifier').value.trim().toLowerCase();
+      const password = document.getElementById('login-password').value;
+
+      if (!identifier || !password) {
+        alert('Harap isi semua kolom.');
+        return;
+      }
+
+      let emailToUse = identifier;
+
+      try {
+        // Jika bukan email, cari email dari Firestore
+        if (!identifier.includes('@')) {
+          const usersRef = collection(db, "users");
+          const q1 = query(usersRef, where("username", "==", identifier));
+          const q2 = query(usersRef, where("phone", "==", identifier));
+
+          const [snap1, snap2] = await Promise.all([getDocs(q1), getDocs(q2)]);
+          const docFound = snap1.docs[0] || snap2.docs[0];
+
+          if (!docFound) {
+            alert("Akun tidak ditemukan.");
+            return;
+          }
+
+          emailToUse = docFound.data().email;
+        }
+
+        const result = await signInWithEmailAndPassword(auth, emailToUse, password);
+        const user = result.user;
+
+        const profileRef = doc(db, "users", user.uid);
+        const profileSnap = await getDoc(profileRef);
+
+        if (profileSnap.exists()) {
+          const profile = profileSnap.data();
+          localStorage.setItem("user", JSON.stringify({
+            uid: user.uid,
+            username: profile.username,
+            photoUrl: profile.photo || "https://via.placeholder.com/24"
+          }));
+          alert("Login berhasil!");
+          window.location.href = "index.html";
+        } else {
+          alert("Data profil tidak ditemukan.");
+        }
+
+      } catch (error) {
+        console.error(error);
+        alert("Login gagal: " + error.message);
+      }
+    });
+  </script>
+</body>
+</html>

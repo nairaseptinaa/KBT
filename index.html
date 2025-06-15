@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>INKFINITY - Multi-vendor Printing Marketplace</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #ffffff;
+      color: #6b7280;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+    h2 {
+      color: #111827;
+      font-weight: 700;
+    }
+    .product-card {
+      border-radius: 0.75rem;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.05);
+      background: #fff;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    .product-card:hover, .product-card:focus-within {
+      box-shadow: 0 8px 24px rgb(0 0 0 / 0.12);
+      transform: translateY(-4px);
+      outline: none;
+    }
+    .hero-title {
+      font-weight: 800;
+      font-size: 3rem;
+      line-height: 1.2;
+      color: #111827;
+      max-width: 700px;
+    }
+    .hero-subtitle {
+      margin-top: 1rem;
+      font-size: 1.25rem;
+      max-width: 600px;
+      color: #374151;
+    }
+    .btn-primary {
+      background-color: #111827;
+      color: white;
+      padding: 0.75rem 2rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 12px rgb(17 24 39 / 0.25);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+    .btn-primary:hover, .btn-primary:focus {
+      background-color: #374151;
+      outline: none;
+      box-shadow: 0 6px 18px rgb(55 65 81 / 0.35);
+    }
+    .banner-illustration {
+      max-width: 520px;
+      width: 100%;
+      margin-left: auto;
+      filter: grayscale(10%) contrast(90%);
+      opacity: 0.85;
+      user-select: none;
+    }
+    section {
+      padding-top: 4rem;
+      padding-bottom: 5rem;
+    }
+  </style>
+</head>
+<body class="bg-white">
+  <!-- Top bar -->
+  <div class="bg-[#1E3A8A] text-white text-xs flex justify-between items-center px-4 sm:px-6 lg:px-20 h-8 select-none">
+    <div class="flex items-center space-x-2">
+      <a class="hover:underline" href="dashboard.html">Vendor Centre</a>
+      <span>|</span>
+      <a class="hover:underline" href="download.html">Download</a>
+      <span>|</span>
+      <span>Follow us on</span>
+      <a href="#" aria-label="Facebook" class="ml-1"><i class="fab fa-facebook-f bg-white text-[#1E3A8A] rounded-full w-4 h-4 flex items-center justify-center"></i></a>
+      <a href="#" aria-label="Instagram" class="ml-1"><i class="fab fa-instagram bg-white text-[#1E3A8A] rounded-full w-4 h-4 flex items-center justify-center"></i></a>
+      <a href="#" aria-label="LinkedIn" class="ml-1"><i class="fab fa-linkedin-in bg-white text-[#1E3A8A] rounded-full w-4 h-4 flex items-center justify-center"></i></a>
+    </div>
+    <div class="flex items-center space-x-4">
+      <div class="flex items-center space-x-1">
+        <i class="far fa-bell"></i>
+        <span>Notifications</span>
+      </div>
+      <div class="flex items-center space-x-1">
+        <i class="far fa-question-circle"></i>
+        <span>Help</span>
+      </div>
+      <div class="flex items-center space-x-1">
+        <i class="fas fa-globe"></i>
+        <span>Bahasa Indonesia</span>
+        <i class="fas fa-chevron-down text-[8px]"></i>
+      </div>
+      <div class="relative">
+        <button onclick="toggleDropdown()" class="flex items-center space-x-1 hover:underline focus:outline-none" id="user-menu-button" aria-haspopup="true" aria-expanded="false">
+          <img alt="Foto profil" class="rounded-full w-6 h-6 object-cover" src="https://storage.googleapis.com/a1aa/image/7caccf1d-24bd-4014-f314-20769f5b7ff9.jpg" />
+          <span class="truncate max-w-[90px]" title="rachel_amandafausta">rachel_amandafausta</span>
+          <i class="fas fa-chevron-down text-[8px]"></i>
+        </button>
+        <div id="dropdown-menu" class="absolute right-0 mt-2 w-40 bg-white rounded shadow-lg text-black text-sm font-semibold hidden z-10" role="menu" aria-label="User menu">
+          <a class="block px-4 py-2 hover:bg-gray-100" href="profil-saya.html" role="menuitem">Akun Saya</a>
+          <a class="block px-4 py-2 hover:bg-gray-100" href="pesanan.html" role="menuitem">Pesanan Saya</a>
+          <a class="block px-4 py-2 hover:bg-gray-100" href="index-guest.html" role="menuitem">Log Out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header main -->
+  <!-- Header dengan background gradasi biru full lebar -->
+<div class="w-full bg-gradient-to-b from-[#1E40AF] to-[#3B82F6] text-white select-none">
+  <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-20">
+    <header>
+    <div class="flex items-center py-3 space-x-6">
+      <a href="index.html" class="flex items-center space-x-2" aria-label="Inkfinity home">
+        <img src="https://storage.googleapis.com/a1aa/image/bbf3e31f-cdc5-4d6e-2fa3-149982f1f1c2.jpg" class="block" height="32" width="32" alt="logo" />
+        <span class="text-2xl font-semibold tracking-tight">INKFINITY</span>
+      </a>
+      <form class="flex-grow max-w-3xl" role="search" aria-label="Search services">
+        <div class="relative">
+          <input type="search" placeholder="Cari layanan cetak..." class="w-full rounded border border-white bg-white placeholder-gray-500 py-2 px-4 pr-12 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+          <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 bg-[#1E3A8A] text-white rounded px-3 py-1 hover:bg-[#254493] transition" aria-label="Search">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </form>
+      <a href="cart.html" title="Lihat Keranjang" aria-label="Cart">
+        <i class="fas fa-shopping-cart text-2xl cursor-pointer"></i>
+      </a>
+    </div>
+    <nav class="flex flex-wrap gap-x-6 text-xs pb-3 border-b border-white border-opacity-20 select-none" role="navigation" aria-label="Primary">
+      <a href="digital-printing.html" class="hover:underline focus:outline-none focus:ring-2 focus:ring-white" tabindex="0">Fotocopy Digital Printing</a>
+      <a href="offset-printing.html" class="hover:underline focus:outline-none focus:ring-2 focus:ring-white" tabindex="0">Offset Printing</a>
+      <a href="large-format.html" class="hover:underline focus:outline-none focus:ring-2 focus:ring-white" tabindex="0">Large Format Printing</a>
+    </nav>
+    </header>
+  </div>
+</div>
+
+
+
+  <!-- Hero Banner Section -->
+  <section aria-label="Hero banner" class="max-w-[1200px] mx-auto px-4 pt-20 pb-28 grid md:grid-cols-2 items-center gap-12 select-text">
+    <div class="max-w-xl">
+      <h1 class="hero-title">Bangun dan Tumbuhkan Bisnis Cetakmu dengan INKFINITY</h1>
+      <p class="hero-subtitle">Platform marketplace cetak multi-vendor terpercaya. Jelajahi produk favoritmu, atau daftarkan layanan cetakmu sendiri di Vendor Centre sekarang.</p>
+      <a href="dashboard.html" class="btn-primary mt-8 inline-block" aria-label="Mulai daftarkan produk klik di sini">
+        <i class="fas fa-plus-circle"></i> Daftar Produk Sekarang
+      </a>
+    </div>
+    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80" alt="Illustrasi digital printing" class="banner-illustration rounded-lg shadow-lg" loading="lazy" />
+  </section>
+
+  <script>
+    function toggleDropdown() {
+      const menu = document.getElementById("dropdown-menu");
+      menu.classList.toggle("hidden");
+    }
+    document.addEventListener("click", function (event) {
+      const dropdown = document.getElementById("dropdown-menu");
+      const button = document.getElementById("user-menu-button");
+      if (!dropdown.contains(event.target) && !button.contains(event.target)) {
+        dropdown.classList.add("hidden");
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>INKFINITY - Multi-vendor Printing Marketplace</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #ffffff;
+      color: #6b7280;
+      line-height: 1.6;
+      margin: 0;
+      min-height: 100vh;
+    }
+    main {
+      max-width: 1200px;
+      margin: 2rem auto 5rem;
+      padding: 0 1rem;
+    }
+    h2 {
+      font-weight: 700;
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: #111827;
+      user-select: none;
+    }
+    .product-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.5rem;
+    }
+    .product-card {
+      background: #fff;
+      border-radius: 0.75rem;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.05);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      user-select: none;
+    }
+    .product-card:hover, .product-card:focus-visible {
+      box-shadow: 0 8px 24px rgb(0 0 0 / 0.12);
+      transform: translateY(-4px);
+      outline: none;
+    }
+    .product-image {
+      width: 100%;
+      height: 180px;
+      border-radius: 0.75rem;
+      object-fit: cover;
+      background-color: #f3f4f6;
+      margin-bottom: 1rem;
+      user-select: none;
+    }
+    .product-name {
+      font-weight: 700;
+      font-size: 1.375rem;
+      margin-bottom: 0.5rem;
+      color: #111827;
+      user-select: text;
+    }
+    .product-description {
+      color: #6b7280;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      flex-grow: 1;
+      white-space: pre-line;
+      user-select: text;
+    }
+    .product-price {
+      font-weight: 700;
+      font-size: 1.125rem;
+      color: #2563eb;
+      user-select: text;
+    }
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: #9ca3af;
+      user-select: none;
+      margin-top: 3rem;
+    }
+    /* Modal styles */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px);
+      z-index: 50;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+    .modal-backdrop.active {
+      display: flex;
+    }
+    .modal {
+      background: white;
+      border-radius: 1rem;
+      max-width: 700px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      padding: 2rem;
+      user-select: text;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #6b7280;
+      transition: color 0.3s ease;
+    }
+    .modal-close-btn:hover {
+      color: #111827;
+    }
+    .modal-image {
+      width: 100%;
+      max-height: 350px;
+      border-radius: 0.75rem;
+      object-fit: contain;
+      background-color: #f3f4f6;
+    }
+    .modal-title {
+      font-weight: 800;
+      font-size: 2rem;
+      color: #111827;
+      margin-bottom: 0.5rem;
+    }
+    .modal-description {
+      color: #4b5563;
+      font-size: 1rem;
+      white-space: pre-line;
+    }
+    .modal-price {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #2563eb;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h2>Produk Tersedia</h2>
+    <div id="productList" class="product-list" role="list" aria-live="polite" aria-relevant="additions removals">
+      <!-- Produk akan dimunculkan di sini -->
+    </div>
+  </main>
+
+  <!-- Modal Detail Produk -->
+  <div id="productModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDescription">
+    <div class="modal">
+      <button class="modal-close-btn" aria-label="Tutup detail produk" id="modalCloseBtn">&times;</button>
+      <img id="modalImage" class="modal-image" alt="Gambar produk" />
+      <div class="modal-content">
+        <h3 id="modalTitle" class="modal-title"></h3>
+        <p id="modalDescription" class="modal-description"></p>
+        <p id="modalPrice" class="modal-price"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function getProducts() {
+      const data = localStorage.getItem('inkfinity-products');
+      if (!data) return [];
+      try {
+        return JSON.parse(data);
+      } catch {
+        return [];
+      }
+    }
+
+    function createProductCard(product, index) {
+      const card = document.createElement('article');
+      card.className = 'product-card';
+      card.setAttribute('role', 'listitem');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', product.name);
+
+      const img = document.createElement('img');
+      img.className = 'product-image';
+      if (product.image && product.image.startsWith('data:image')) {
+        img.src = product.image;
+        img.alt = product.name;
+      } else {
+        img.src = 'https://via.placeholder.com/320x180?text=No+Image';
+        img.alt = 'Gambar tidak tersedia';
+      }
+      card.appendChild(img);
+
+      const nameEl = document.createElement('h3');
+      nameEl.className = 'product-name';
+      nameEl.textContent = product.name;
+      card.appendChild(nameEl);
+
+      const descEl = document.createElement('p');
+      descEl.className = 'product-description';
+      descEl.textContent = product.description || '';
+      card.appendChild(descEl);
+
+      const priceEl = document.createElement('div');
+      priceEl.className = 'product-price';
+      priceEl.textContent = product.price 
+        ? `Rp ${Number(product.price).toLocaleString('id-ID')}`
+        : 'Harga N/A';
+      card.appendChild(priceEl);
+
+      // Button untuk melihat detail
+      const detailButton = document.createElement('button');
+      detailButton.className = 'btn-detail';
+      detailButton.textContent = 'Lihat Detail';
+      detailButton.style.marginTop = '1rem';
+      detailButton.style.backgroundColor = '#2563eb';
+      detailButton.style.color = 'white';
+      detailButton.style.border = 'none';
+      detailButton.style.borderRadius = '0.375rem';
+      detailButton.style.padding = '0.5rem 1rem';
+      detailButton.style.cursor = 'pointer';
+      detailButton.addEventListener('click', (e) => {
+        e.stopPropagation(); // Mencegah event click pada card
+        window.location.href = `product-detail.html?id=${index}`; // Arahkan ke halaman detail produk
+      });
+      card.appendChild(detailButton);
+
+      // Add click event to open modal with product detail
+      card.addEventListener('click', () => openModal(product));
+
+      // Also allow keyboard open modal
+      card.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openModal(product);
+        }
+      });
+
+      return card;
+    }
+
+    function renderProducts() {
+      const container = document.getElementById('productList');
+      container.innerHTML = '';
+
+      const products = getProducts();
+
+      if (!products.length) {
+        const emptyMsg = document.createElement('p');
+        emptyMsg.className = 'empty-state';
+        emptyMsg.textContent = 'Belum ada produk untuk ditampilkan. Silakan tambahkan produk di Seller Centre.';
+        container.appendChild(emptyMsg);
+        return;
+      }
+
+      products.forEach((prod, idx) => {
+        const card = createProductCard(prod, idx);
+        container.appendChild(card);
+      });
+    }
+
+    // Modal logic
+    const modal = document.getElementById('productModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDescription = document.getElementById('modalDescription');
+    const modalPrice = document.getElementById('modalPrice');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+    function openModal(product) {
+      modalImage.src = product.image && product.image.startsWith('data:image') ? product.image : 'https://via.placeholder.com/520x350?text=No+Image';
+      modalImage.alt = product.name;
+
+      modalTitle.textContent = product.name;
+      modalDescription.textContent = product.description || '-';
+      modalPrice.textContent = product.price ? `Rp ${Number(product.price).toLocaleString('id-ID')}` : 'Harga N/A';
+
+      modal.classList.add('active');
+      modalCloseBtn.focus();
+
+      // Trap focus inside modal for accessibility (optional enhancement)
+      document.addEventListener('keydown', handleKeyDown);
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+      document.removeEventListener('keydown', handleKeyDown);
+    }
+
+    function handleKeyDown(e) {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    }
+
+    modalCloseBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', renderProducts);
+  </script>
+</body>
+</html>

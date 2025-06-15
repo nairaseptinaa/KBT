@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>INKFINITY Produk</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #ffffff;
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white border-b border-gray-200">
+    <div class="max-w-[1200px] mx-auto flex items-center justify-between px-6 py-4">
+      <a href="#" class="flex items-center space-x-3">
+        <img src="https://storage.googleapis.com/a1aa/image/d7d2308b-3c0c-435d-9ac3-a10a2a93a882.jpg" alt="Logo" class="w-10 h-10" />
+        <span class="text-4xl font-extrabold text-gray-900">INKFINITY</span>
+      </a>
+      <nav class="flex items-center space-x-6 font-semibold text-gray-700">
+        <a href="dashboard.html" class="hover:text-blue-600">Dashboard</a>
+        <a href="produk.html" class="font-bold text-blue-600">Produk</a>
+        <a href="pesanan.html" class="hover:text-blue-600">Pesanan</a>
+        <a href="pembayaran.html" class="hover:text-blue-600">Pembayaran</a>
+        <a href="tambah_produk.html" class="bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800">Tambah Produk</a>
+      </nav>
+      <button id="userMenuBtn" class="relative flex items-center gap-2">
+        <img src="https://storage.googleapis.com/a1aa/image/a34b6437-c38b-4a5a-c7df-453f5500d428.jpg" class="w-10 h-10 rounded-full object-cover" />
+        <span id="user-name" class="font-semibold max-w-[120px] truncate">user_inkfinity</span>
+        <i class="fas fa-chevron-down text-gray-600"></i>
+      </button>
+      <div id="userDropdown" class="hidden absolute right-6 top-[60px] w-48 bg-white rounded-xl shadow-lg py-3 text-gray-800 font-semibold">
+        <a href="profil-saya.html" class="block px-4 py-2 hover:bg-gray-100">Akun Saya</a>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Pesanan Saya</a>
+        <button onclick="logoutUser()" class="w-full text-left px-4 py-2 hover:bg-gray-100">Log Out</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow max-w-[1200px] mx-auto px-6 py-16 space-y-20">
+    <!-- Hero -->
+    <section class="text-center max-w-3xl mx-auto">
+      <h1 class="text-5xl font-extrabold text-gray-900 mb-4">Daftar Produk</h1>
+      <p class="text-gray-600 text-lg">Kelola produk Anda dengan mudah di sini.</p>
+    </section>
+
+    <!-- Daftar Produk -->
+    <div id="productList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" role="list" aria-live="polite" aria-relevant="additions removals">
+      <!-- Produk akan dirender di sini -->
+    </div>
+    <p id="emptyMessage" class="text-center text-gray-500 hidden">Belum ada produk ditambahkan.</p>
+  </main>
+
+  <script>
+    // Ambil produk dari localStorage
+    function getProducts() {
+      try {
+        return JSON.parse(localStorage.getItem('inkfinity-products')) || [];
+      } catch {
+        return [];
+      }
+    }
+
+    // Simpan produk ke localStorage
+    function saveProducts(products) {
+      localStorage.setItem('inkfinity-products', JSON.stringify(products));
+    }
+
+    // Render daftar produk
+    function renderProductList() {
+      const productListEl = document.getElementById('productList');
+      const emptyMessageEl = document.getElementById('emptyMessage');
+      const products = getProducts();
+
+      productListEl.innerHTML = '';
+      if (products.length === 0) {
+        emptyMessageEl.classList.remove('hidden');
+        return;
+      }
+      emptyMessageEl.classList.add('hidden');
+
+      products.forEach((product, index) => {
+        const article = document.createElement('article');
+        article.setAttribute('role', 'listitem');
+        article.className = 'produk-card bg-white rounded-lg shadow-md p-4 flex flex-col';
+
+        const img = document.createElement('img');
+        img.className = 'produk-img rounded-lg mb-4';
+        img.src = product.image || 'https://via.placeholder.com/150?text=No+Image';
+        img.alt = product.name || 'No image';
+        article.appendChild(img);
+
+        const info = document.createElement('div');
+        info.className = 'produk-info flex-grow';
+
+        const name = document.createElement('h3');
+        name.className = 'text-lg font-semibold text-gray-800';
+        name.textContent = product.name;
+        info.appendChild(name);
+
+        if (product.description) {
+          const desc = document.createElement('p');
+          desc.className = 'text-gray-600 mb-2';
+          desc.textContent = product.description;
+          info.appendChild(desc);
+        }
+
+        const price = document.createElement('p');
+        price.className = 'harga text-blue-600 font-bold';
+        price.textContent = `Rp ${Number(product.price).toLocaleString('id-ID')}`;
+        info.appendChild(price);
+
+        if (product.stock !== undefined) {
+          const stock = document.createElement('p');
+          stock.className = 'text-gray-600';
+          stock.textContent = `Stok: ${product.stock}`;
+          info.appendChild(stock);
+        }
+
+        if (product.category) {
+          const cat = document.createElement('p');
+          cat.className = 'text-gray-600';
+          cat.textContent = `Kategori: ${product.category}`;
+          info.appendChild(cat);
+        }
+
+        // Tombol Edit
+        const editButton = document.createElement('button');
+        editButton.className = 'mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600';
+        editButton.textContent = 'Edit';
+        editButton.onclick = () => {
+          localStorage.setItem('editProductIndex', index); // Simpan index produk yang akan diedit
+          window.location.href = 'edit_produk.html'; // Arahkan ke halaman edit
+        };
+        info.appendChild(editButton);
+
+        // Tombol Hapus
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'mt-2 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600';
+        deleteButton.textContent = 'Hapus';
+        deleteButton.onclick = () => {
+          const confirmed = confirm('Apakah Anda yakin ingin menghapus produk ini?');
+          if (confirmed) {
+            const products = getProducts();
+            products.splice(index, 1); // Hapus produk dari array
+            saveProducts(products); // Simpan kembali ke localStorage
+            renderProductList(); // Render ulang daftar produk
+          }
+        };
+        info.appendChild(deleteButton);
+
+        article.appendChild(info);
+        productListEl.appendChild(article);
+      });
+    }
+
+    // Inisialisasi render produk saat halaman siap
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProductList();
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Edit Produk - INKFINITY</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #ffffff;
+      color: #6b7280;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+  <!-- Sticky Header -->
+  <header class="sticky top-0 z-50 bg-white border-b border-gray-200">
+    <div class="max-w-[1200px] mx-auto flex items-center justify-between px-6 py-4">
+      <a href="seller-centre.html" aria-label="INKFINITY Home" class="flex items-center space-x-3">
+        <img src="https://storage.googleapis.com/a1aa/image/d7d2308b-3c0c-435d-9ac3-a10a2a93a882.jpg" alt="Inkfinity logo" class="w-10 h-10" />
+        <span class="text-4xl font-extrabold text-gray-900 select-none">INKFINITY</span>
+      </a>
+      <nav class="flex items-center space-x-6 text-gray-700 font-semibold">
+        <a href="dashboard.html" class="hover:text-blue-600 transition-colors duration-200">Dashboard</a>
+        <a href="seller-centre.html" class="hover:text-blue-600 transition-colors duration-200">Produk</a>
+        <a href="pesanan.html" class="hover:text-blue-600 transition-colors duration-200">Pesanan</a>
+        <a href="pembayaran.html" class="hover:text-blue-600 transition-colors duration-200">Pembayaran</a>
+      </nav>
+      <button aria-label="User  Menu" id="userMenuBtn" class="relative flex items-center gap-2 outline-none focus:ring-2 focus:ring-blue-600 rounded">
+        <img src="https://storage.googleapis.com/a1aa/image/a34b6437-c38b-4a5a-c7df-453f5500d428.jpg" alt="User  avatar" class="w-10 h-10 rounded-full object-cover" />
+        <span class="font-semibold text-gray-900 select-none max-w-[120px] truncate">user_inkfinity</span>
+        <i class="fas fa-chevron-down text-gray-600"></i>
+      </button>
+      <div id="userDropdown" class="hidden absolute right-6 top-[60px] w-48 bg-white rounded-xl shadow-lg py-3 font-semibold text-gray-800">
+        <a href="profil-saya.html" class="block px-4 py-2 hover:bg-gray-100">Akun Saya</a>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Pesanan Saya</a>
+        <button id="logoutBtn" class="w-full text-left px-4 py-2 hover:bg-gray-100">Log Out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-[900px] mx-auto px-6 py-16">
+    <h1 class="text-5xl font-extrabold text-gray-900 tracking-tight mb-8 select-none">Edit Produk</h1>
+
+    <form id="editProductForm" class="space-y-8 bg-white rounded-xl shadow-md p-8" novalidate enctype="multipart/form-data">
+      <!-- Nama Produk -->
+      <div>
+        <label for="productName" class="block mb-2 font-semibold text-gray-700">Nama Produk <span class="text-red-600">*</span></label>
+        <input type="text" id="productName" name="productName" required
+          class="w-full border rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600" />
+        <p id="productNameError" class="mt-1 text-red-600 text-sm hidden">Nama produk wajib diisi</p>
+      </div>
+
+      <!-- Deskripsi Produk -->
+      <div>
+        <label for="productDescription" class="block mb-2 font-semibold text-gray-700">Deskripsi Produk</label>
+        <textarea id="productDescription" name="productDescription" rows="4"
+          class="w-full border rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600"></textarea>
+      </div>
+
+      <!-- Harga Produk -->
+      <div>
+        <label for="productPrice" class="block mb-2 font-semibold text-gray-700">Harga Produk (Rp) <span class="text-red-600">*</span></label>
+        <input type="number" id="productPrice" name="productPrice" min="0" required
+          class="w-full border rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600" />
+        <p id="productPriceError" class="mt-1 text-red-600 text-sm hidden">Harga produk wajib diisi dan tidak boleh kurang dari 0</p>
+      </div>
+
+      <!-- Kategori -->
+      <div>
+        <label for="productCategory" class="block mb-2 font-semibold text-gray-700">Kategori <span class="text-red-600">*</span></label>
+        <select id="productCategory" name="productCategory" required
+          class="w-full border rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600">
+          <option value="" disabled>Pilih kategori produk</option>
+          <option value="kartu-nama">Kartu Nama</option>
+          <option value="undangan">Undangan</option>
+          <option value="spanduk">Spanduk</option>
+          <option value="brosur">Brosur</option>
+          <option value="digital-printing">Digital Printing</option>
+          <option value="offset-printing">Offset Printing</option>
+        </select>
+        <p id="productCategoryError" class="mt-1 text-red-600 text-sm hidden">Kategori produk wajib dipilih</p>
+      </div>
+
+      <!-- Upload Gambar -->
+      <div>
+        <label for="productImage" class="block mb-2 font-semibold text-gray-700">Upload Gambar Produk</label>
+        <input type="file" id="productImage" name="productImage" accept="image/*"
+          class="w-full text-gray-700 border rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-600" />
+        <div class="mt-3">
+          <img id="imagePreview" alt="Preview Gambar" class="max-h-48 rounded-lg hidden" />
+        </div>
+      </div>
+
+      <!-- Stok Produk -->
+      <div>
+        <label for="productStock" class="block mb-2 font-semibold text-gray-700">Stok Produk <span class="text-red-600">*</span></label>
+        <input type="number" id="productStock" name="productStock" min="0" required
+          class="w-full border rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600" />
+        <p id="productStockError" class="mt-1 text-red-600 text-sm hidden">Jumlah stok wajib diisi dan tidak boleh kurang dari 0</p>
+      </div>
+
+      <!-- Metode Pembayaran -->
+      <div>
+        <label for="paymentMethods" class="block mb-2 font-semibold text-gray-700">Metode Pembayaran <span class="text-red-600">*</span></label>
+        <select id="paymentMethods" name="paymentMethods" required
+          class="w-full border rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600">
+          <option value="" disabled>Pilih metode pembayaran</option>
+          <option value="transfer">Transfer Bank</option>
+          <option value="cod">Cash on Delivery (COD)</option>
+          <option value="ewallet">E-Wallet</option>
+        </select>
+        <p id="paymentMethodsError" class="mt-1 text-red-600 text-sm hidden">Harap pilih metode pembayaran</p>
+      </div>
+
+      <!-- Metode Pengiriman -->
+      <div>
+        <label for="shippingMethods" class="block mb-2 font-semibold text-gray-700">Metode Pengiriman <span class="text-red-600">*</span></label>
+        <select id="shippingMethods" name="shippingMethods" required
+          class="w-full border rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600">
+          <option value="" disabled>Pilih metode pengiriman</option>
+          <option value="jne">JNE</option>
+          <option value="pos">POS Indonesia</option>
+          <option value="tiki">TIKI</option>
+          <option value="gojek">Gojek</option>
+        </select>
+        <p id="shippingMethodsError" class="mt-1 text-red-600 text-sm hidden">Harap pilih metode pengiriman</p>
+      </div>
+
+      <!-- Tags Produk -->
+      <div>
+        <label for="productTags" class="block mb-2 font-semibold text-gray-700">Tags Produk (pisahkan dengan koma)</label>
+        <input type="text" id="productTags" name="productTags"
+          class="w-full border rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600" />
+      </div>
+
+      <div class="flex justify-end">
+        <button type="submit"
+          class="px-8 py-3 font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600">
+          Simpan
+        </button>
+      </div>
+    </form>
+  </main>
+
+  <script>
+    // Ambil ID produk dari query parameter URL
+    function getProductId() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('id');
+    }
+
+    // Load produk dari localStorage dan isi form edit
+    function loadProductForEdit() {
+      const id = getProductId();
+      if (!id) {
+        alert('ID produk tidak ditemukan.');
+        return;
+      }
+      const products = JSON.parse(localStorage.getItem('products') || '[]');
+      const product = products.find(p => p.id === id);
+      console.log('ID Produk:', id); // Debugging
+      console.log('Produk yang ditemukan:', product); // Debugging
+      if (!product) {
+        alert('Produk tidak ditemukan.');
+        return;
+      }
+
+      // Isi form dengan data produk
+      document.getElementById('productName').value = product.name || '';
+      document.getElementById('productDescription').value = product.description || '';
+      document.getElementById('productPrice').value = product.price || '';
+      document.getElementById('productCategory').value = product.category || '';
+      document.getElementById('productStock').value = product.stock || '';
+      document.getElementById('paymentMethods').value = product.paymentMethods || '';
+      document.getElementById('shippingMethods').value = product.shippingMethods || '';
+      document.getElementById('productTags').value = product.tags ? product.tags.join(', ') : '';
+
+      // Tampilkan preview gambar jika ada
+      if (product.image) {
+        const imagePreview = document.getElementById('imagePreview');
+        imagePreview.src = product.image;
+        imagePreview.classList.remove('hidden');
+      }
+    }
+
+    // Fungsi untuk mengubah gambar preview saat user pilih file baru
+    document.getElementById('productImage').addEventListener('change', function (event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const imagePreview = document.getElementById('imagePreview');
+        imagePreview.src = e.target.result;
+        imagePreview.classList.remove('hidden');
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Validasi sederhana form
+    function validateForm() {
+      let valid = true;
+
+      // Nama produk wajib diisi
+      const nameInput = document.getElementById('productName');
+      const nameError = document.getElementById('productNameError');
+      if (!nameInput.value.trim()) {
+        nameError.classList.remove('hidden');
+        valid = false;
+      } else {
+        nameError.classList.add('hidden');
+      }
+
+      // Harga wajib diisi dan >= 0
+      const priceInput = document.getElementById('productPrice');
+      const priceError = document.getElementById('productPriceError');
+      if (priceInput.value === '' || Number(priceInput.value) < 0) {
+        priceError.classList.remove('hidden');
+        valid = false;
+      } else {
+        priceError.classList.add('hidden');
+      }
+
+      // Kategori wajib dipilih
+      const categoryInput = document.getElementById('productCategory');
+      const categoryError = document.getElementById('productCategoryError');
+      if (!categoryInput.value) {
+        categoryError.classList.remove('hidden');
+        valid = false;
+      } else {
+        categoryError.classList.add('hidden');
+      }
+
+      // Stok wajib diisi dan >= 0
+      const stockInput = document.getElementById('productStock');
+      const stockError = document.getElementById('productStockError');
+      if (stockInput.value === '' || Number(stockInput.value) < 0) {
+        stockError.classList.remove('hidden');
+        valid = false;
+      } else {
+        stockError.classList.add('hidden');
+      }
+
+      // Metode pembayaran wajib dipilih
+      const paymentInput = document.getElementById('paymentMethods');
+      const paymentError = document.getElementById('paymentMethodsError');
+      if (!paymentInput.value) {
+        paymentError.classList.remove('hidden');
+        valid = false;
+      } else {
+        paymentError.classList.add('hidden');
+      }
+
+      // Metode pengiriman wajib dipilih
+      const shippingInput = document.getElementById('shippingMethods');
+      const shippingError = document.getElementById('shippingMethodsError');
+      if (!shippingInput.value) {
+        shippingError.classList.remove('hidden');
+        valid = false;
+      } else {
+        shippingError.classList.add('hidden');
+      }
+
+      return valid;
+    }
+
+    // Submit form untuk update produk
+    document.getElementById('editProductForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      if (!validateForm()) {
+        return;
+      }
+
+      const id = getProductId();
+      const products = JSON.parse(localStorage.getItem('products') || '[]');
+      const productIndex = products.findIndex(p => p.id === id);
+
+      if (productIndex === -1) {
+        alert('Produk tidak ditemukan.');
+        return;
+      }
+
+      // Ambil data dari form
+      const updatedProduct = {
+        id: id,
+        name: document.getElementById('productName').value.trim(),
+        description: document.getElementById('productDescription').value.trim(),
+        price: Number(document.getElementById('productPrice').value),
+        category: document.getElementById('productCategory').value,
+        stock: Number(document.getElementById('productStock').value),
+        paymentMethods: document.getElementById('paymentMethods').value,
+        shippingMethods: document.getElementById('shippingMethods').value,
+        tags: document.getElementById('productTags').value
+          .split(',')
+          .map(t => t.trim())
+          .filter(t => t.length > 0),
+      };
+
+      // Jika user pilih gambar baru, simpan base64-nya
+      const fileInput = document.getElementById('productImage');
+      if (fileInput.files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          updatedProduct.image = event.target.result;
+          saveUpdatedProduct(products, productIndex, updatedProduct);
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+      } else {
+        // Jika tidak ada gambar baru, pertahankan gambar lama
+        updatedProduct.image = products[productIndex].image || '';
+        saveUpdatedProduct(products, productIndex, updatedProduct);
+      }
+    });
+
+    // Simpan produk yang sudah diupdate ke localStorage
+    function saveUpdatedProduct(products, index, updatedProduct) {
+      products[index] = updatedProduct;
+      localStorage.setItem('products', JSON.stringify(products));
+      alert('Produk berhasil diperbarui!');
+      window.location.href = 'produk.html'; // Kembali ke halaman produk
+    }
+
+    // Load data produk saat halaman siap
+    document.addEventListener('DOMContentLoaded', loadProductForEdit);
+  </script>
+</body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>INKFINITY Checkout</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+      background-color: #f9fafb;
+      color: #374151;
+      padding: 2rem 1rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+    header {
+      border-bottom: 2px solid #2563eb;
+      padding-bottom: 1rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #2563eb;
+      font-weight: 700;
+      font-size: 1.75rem;
+      user-select: none;
+    }
+    header img {
+      height: 40px;
+      width: 40px;
+    }
+    .checkout-container {
+      background: #ffffff;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+    .product-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+    }
+    .product-table th, .product-table td {
+      border: 1px solid #e5e7eb;
+      padding: 0.75rem;
+      text-align: center;
+    }
+    .product-table th {
+      background-color: #f3f4f6;
+      font-weight: 600;
+    }
+    .product-image {
+      height: 80px;
+      width: 100px;
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      object-fit: contain;
+    }
+    .empty-message {
+      text-align: center;
+      font-style: italic;
+      color: #9ca3af;
+      padding: 4rem 0;
+      font-size: 1rem;
+      user-select: none;
+    }
+    .total-container {
+      display: flex;
+      justify-content: flex-end;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #2563eb;
+      user-select: none;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    button.confirm-btn {
+      background-color: #2563eb;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.75rem;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      user-select: none;
+      display: block;
+      margin-left: auto;
+    }
+    button.confirm-btn:hover,
+    button.confirm-btn:focus {
+      background-color: #1d4ed8;
+      outline: none;
+      transform: translateY(-2px);
+    }
+    .input-field {
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      width: 100%;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    .shipping-options, .payment-method {
+      margin-bottom: 2rem;
+    }
+    .payment-instructions {
+      margin-top: 1rem;
+      padding: 1rem;
+      background-color: #f3f4f6;
+      border-radius: 0.5rem;
+    }
+    .summary {
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background-color: #f3f4f6;
+      border-radius: 0.5rem;
+    }
+    .return-policy {
+      margin-top: 1rem;
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 500px;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="https://storage.googleapis.com/a1aa/image/59d6e71f-a571-48bb-1350-c0dcdc3f16ec.jpg" alt="Inkfinity logo" />
+    <span>INKFINITY | Checkout</span>
+  </header>
+
+  <div class="checkout-container">
+    <h2 class="text-lg font-bold mb-4"><i class="fas fa-user"></i> Informasi Pembeli</h2>
+    <input type="text" id="buyer-name" placeholder="Nama Lengkap" class="input-field" required />
+    <input type="text" id="buyer-phone" placeholder="Nomor Telepon" class="input-field" required />
+    <input type="text" id="shipping-address" placeholder="Alamat Pengiriman" class="input-field" required />
+
+    <h2 class="text-lg font-bold mb-4"><i class="fas fa-box"></i> Produk yang Dipilih</h2>
+    <section class="checkout-products" aria-label="Produk yang dipilih untuk checkout" id="checkout-products-section">
+      <!-- Dynamically loaded products will appear here -->
+    </section>
+
+    <h3 class="text-lg font-bold mb-2"><i class="fas fa-comment"></i> Pesan Opsional</h3>
+    <textarea id="buyer-message" placeholder="Tulis pesan tambahan (opsional)" class="input-field" rows="3"></textarea>
+
+    <div class="shipping-options">
+      <h3 class="text-lg font-bold mb-2"><i class="fas fa-truck"></i> Pilih Metode Pengiriman</h3>
+      <select id="shipping-method" class="input-field">
+        <option value="pickup">Ambil di Tempat - Rp0</option>
+        <option value="standard">Pengiriman Standar - Rp10.000</option>
+        <option value="express">Pengiriman Ekspres - Rp20.000</option>
+      </select>
+    </div>
+
+    <div class="payment-method">
+  <h3 class="text-lg font-bold mb-2"><i class="fas fa-credit-card"></i> Pilih Metode Pembayaran</h3>
+  <select id="payment-method" class="input-field">
+    <option value="credit-card">Kartu Kredit</option>
+    <option value="bank-transfer">Transfer Bank</option>
+    <option value="e-wallet">Dompet Digital</option>
+    <option value="cod">Cash on Delivery (COD)</option>
+    <option value="paypal">PayPal</option>
+    <option value="gopay">Gopay</option>
+    <option value="ovo">OVO</option>
+  </select>
+</div>
+
+<script>
+  // Menyimpan metode pembayaran yang dipilih ke localStorage
+  const paymentSelect = document.getElementById('payment-method');
+  paymentSelect.addEventListener('change', function() {
+    localStorage.setItem('paymentMethod', paymentSelect.value);
+  });
+</script>
+
+
+    <div class="payment-instructions" id="payment-instructions">
+      <h4 class="font-bold">Instruksi Pembayaran:</h4>
+      <p id="instructions-text">Silakan pilih metode pembayaran untuk melihat instruksi.</p>
+    </div>
+
+    <div class="summary">
+      <h3 class="text-lg font-bold mb-2">Ringkasan Pesanan</h3>
+      <div><strong>Total Harga:</strong> <span id="checkout-total">Rp0</span></div>
+      <div><strong>Estimasi Waktu Pengiriman:</strong> <span id="shipping-estimate">3-5 hari kerja</span></div>
+    </div>
+
+    <div class="return-policy">
+      <p><strong>Kebijakan Pengembalian:</strong> Anda dapat mengembalikan produk dalam waktu 30 hari setelah penerimaan. Pastikan produk dalam kondisi baik dan kemasan asli.</p>
+    </div>
+
+    <div class="total-container" aria-live="polite" aria-atomic="true">
+      <div>Total Harga:</div>
+      <div id="final-total" class="text-blue-600 font-bold">Rp0</div>
+    </div>
+
+    <div class="payment-details">
+      <h3 class="text-lg font-bold mb-2">Rincian Pembayaran</h3>
+      <div id="payment-breakdown"></div>
+    </div>
+
+   <button class="confirm-btn" id="confirm-checkout">Konfirmasi Pembayaran</button>
+
+<!-- Modal for confirmation -->
+<div id="confirmation-modal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center" style="display: none;">
+  <div class="modal-content bg-white rounded-lg p-6 max-w-sm w-full relative">
+    <button class="close absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-xl font-bold" id="close-modal">&times;</button>
+    <h2 class="text-lg font-bold mb-2">Konfirmasi Pembayaran</h2>
+    <p class="mb-2">Apakah Anda yakin ingin melanjutkan pembayaran?</p>
+    <p class="mb-4"><strong>Metode Pembayaran:</strong> <span id="selected-payment-method"></span></p>
+    <button class="confirm-btn bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" id="finalize-checkout">Ya, Konfirmasi</button>
+  </div>
+</div>
+
+<script>
+  const confirmBtn = document.getElementById('confirm-checkout');
+  const modal = document.getElementById('confirmation-modal');
+  const closeModal = document.getElementById('close-modal');
+  const finalizeBtn = document.getElementById('finalize-checkout');
+  const selectedMethod = document.getElementById('selected-payment-method');
+
+  function getPaymentMethodLabel(method) {
+    const labels = {
+      'credit-card': 'Kartu Kredit',
+      'bank-transfer': 'Transfer Bank',
+      'e-wallet': 'Dompet Digital',
+      'cod': 'Bayar di Tempat (COD)',
+      'paypal': 'PayPal',
+      'gopay': 'GoPay',
+      'ovo': 'OVO'
+    };
+    return labels[method] || 'Metode Tidak Dikenal';
+  }
+
+  // Saat tombol Konfirmasi Checkout diklik
+  confirmBtn.addEventListener('click', () => {
+    const selectedPayment = document.getElementById('payment-method').value;
+    // Simpan ke localStorage supaya konsisten di halaman lain
+    localStorage.setItem('paymentMethod', selectedPayment);
+    selectedMethod.textContent = getPaymentMethodLabel(selectedPayment);
+    modal.style.display = 'flex';
+  });
+
+  // Tutup modal
+  closeModal.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  // Tutup modal jika klik di luar konten
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+
+  // Tombol Finalisasi Checkout
+  finalizeBtn.addEventListener('click', () => {
+    const name = document.getElementById('buyer-name').value;
+    const phone = document.getElementById('buyer-phone').value;
+    const address = document.getElementById('shipping-address').value;
+    const message = document.getElementById('buyer-message').value;
+
+    if (!name || !phone || !address) {
+      alert('Silakan lengkapi nama, nomor telepon, dan alamat pengiriman.');
+      return;
+    }
+
+    const orderData = {
+      name: name,
+      phone: phone,
+      address: address,
+      message: message,
+      total: totalPrice
+    };
+    localStorage.setItem('orderData', JSON.stringify(orderData));
+
+    window.location.href = 'payment.html';
+  });
+
+  let totalPrice = 0;
+
+  function formatRupiah(number) {
+    return 'Rp' + number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
+  function loadSelectedProducts() {
+    const container = document.getElementById('checkout-products-section');
+    const selectedProducts = JSON.parse(localStorage.getItem('selectedProducts') || '[]');
+
+    if (!selectedProducts.length) {
+      container.innerHTML = '<p class="empty-message">Tidak ada produk yang dipilih untuk checkout.</p>';
+      document.getElementById('checkout-total').textContent = formatRupiah(0);
+      document.getElementById('final-total').textContent = formatRupiah(0);
+      document.getElementById('payment-breakdown').innerHTML = '';
+      return;
+    }
+
+    container.innerHTML = '';
+    totalPrice = 0;
+
+    let productDetails = `
+      <table class="product-table">
+        <thead>
+          <tr>
+            <th>Gambar</th>
+            <th>Nama Produk</th>
+            <th>Harga Satuan</th>
+            <th>Jumlah</th>
+            <th>Subtotal</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+
+    selectedProducts.forEach((product, index) => {
+      const productTotal = product.price * product.quantity;
+      totalPrice += productTotal;
+
+      productDetails += `
+        <tr>
+          <td><img src="${product.image || ''}" alt="${product.productName || 'Product Image'}" class="product-image" /></td>
+          <td>${product.productName}</td>
+          <td>${formatRupiah(product.price)}</td>
+          <td>
+            <input type="number" value="${product.quantity}" min="1" class="quantity-input" data-index="${index}" />
+          </td>
+          <td>${formatRupiah(productTotal)}</td>
+          <td><button class="remove-btn" data-index="${index}">Hapus</button></td>
+        </tr>
+      `;
+    });
+
+    productDetails += `</tbody></table>`;
+    container.innerHTML = productDetails;
+
+    const shippingMethod = document.getElementById('shipping-method').value;
+    const shippingCost = shippingMethod === 'pickup' ? 0 : (shippingMethod === 'express' ? 20000 : 10000);
+    totalPrice += shippingCost;
+
+    document.getElementById('checkout-total').textContent = formatRupiah(totalPrice);
+    document.getElementById('final-total').textContent = formatRupiah(totalPrice);
+    document.getElementById('payment-breakdown').innerHTML = `
+      <div>Subtotal Produk: ${formatRupiah(totalPrice - shippingCost)}</div>
+      <div>Biaya Pengiriman: ${formatRupiah(shippingCost)}</div>
+      <div><strong>Total: ${formatRupiah(totalPrice)}</strong></div>
+    `;
+
+    attachEventListeners();
+  }
+
+  function attachEventListeners() {
+    document.querySelectorAll('.quantity-input').forEach(input => {
+      input.addEventListener('change', updateQuantity);
+    });
+
+    document.querySelectorAll('.remove-btn').forEach(button => {
+      button.addEventListener('click', removeProduct);
+    });
+
+    document.getElementById('shipping-method').addEventListener('change', loadSelectedProducts);
+    document.getElementById('payment-method').addEventListener('change', updatePaymentInstructions);
+  }
+
+  function updateQuantity(e) {
+    const index = e.target.dataset.index;
+    const selectedProducts = JSON.parse(localStorage.getItem('selectedProducts') || '[]');
+    selectedProducts[index].quantity = parseInt(e.target.value);
+    localStorage.setItem('selectedProducts', JSON.stringify(selectedProducts));
+    loadSelectedProducts();
+  }
+
+  function removeProduct(e) {
+    const index = e.target.dataset.index;
+    const selectedProducts = JSON.parse(localStorage.getItem('selectedProducts') || '[]');
+    selectedProducts.splice(index, 1);
+    localStorage.setItem('selectedProducts', JSON.stringify(selectedProducts));
+    loadSelectedProducts();
+  }
+
+  function updatePaymentInstructions() {
+    const paymentMethod = document.getElementById('payment-method').value;
+    const instructionsText = document.getElementById('instructions-text');
+
+    switch (paymentMethod) {
+      case 'credit-card':
+        instructionsText.textContent = 'Silakan masukkan informasi kartu kredit Anda pada halaman berikutnya.';
+        break;
+      case 'bank-transfer':
+        instructionsText.textContent = 'Silakan transfer ke rekening yang akan kami berikan setelah konfirmasi.';
+        break;
+      case 'e-wallet':
+        instructionsText.textContent = 'Silakan lakukan pembayaran melalui aplikasi dompet digital Anda.';
+        break;
+      case 'cod':
+        instructionsText.textContent = 'Anda dapat membayar kepada kurir saat barang tiba.';
+        break;
+      case 'paypal':
+        instructionsText.textContent = 'Silakan lakukan pembayaran melalui akun PayPal Anda.';
+        break;
+      case 'gopay':
+        instructionsText.textContent = 'Silakan lakukan pembayaran melalui aplikasi Gopay.';
+        break;
+      case 'ovo':
+        instructionsText.textContent = 'Silakan lakukan pembayaran melalui aplikasi OVO.';
+        break;
+      default:
+        instructionsText.textContent = 'Silakan pilih metode pembayaran untuk melihat instruksi.';
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', loadSelectedProducts);
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,144 @@
+<html lang="id">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>Pengaturan Notifikasi - INKFINITY</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('notification-settings-form');
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                const emailNotifications = document.getElementById('email-notifications').checked;
+                const smsNotifications = document.getElementById('sms-notifications').checked;
+                const pushNotifications = document.getElementById('push-notifications').checked;
+                const promotionalEmails = document.getElementById('promotional-emails').checked;
+
+                // Simulated API call to save notification settings
+                console.log('Email Notifications:', emailNotifications);
+                console.log('SMS Notifications:', smsNotifications);
+                console.log('Push Notifications:', pushNotifications);
+                console.log('Promotional Emails:', promotionalEmails);
+
+                // Here you would typically send the data to the server for processing
+                alert('Pengaturan notifikasi berhasil disimpan!');
+            });
+        });
+    </script>
+</head>
+<body class="bg-[#f5f5f5] text-[#222222]">
+    <!-- Top bar -->
+    <div class="bg-[#1e40af] text-white text-xs px-4 py-1 flex justify-center sm:justify-between items-center font-normal">
+        <div class="hidden sm:flex space-x-2 items-center">
+            <span>Seller Centre</span>
+            <span>|</span>
+            <a class="hover:underline" href="#">Download</a>
+            <span>|</span>
+            <span>Ikuti kami di</span>
+            <a aria-label="Facebook" class="hover:underline" href="#"><i class="fab fa-facebook-f"></i></a>
+            <a aria-label="Instagram" class="hover:underline" href="#"><i class="fab fa-instagram"></i></a>
+            <a aria-label="Inkfinity" class="hover:underline" href="#"><i class="fas fa-print"></i></a>
+        </div>
+        <div class="flex space-x-4 items-center text-xs">
+            <button class="flex items-center space-x-1 hover:underline">
+                <i class="far fa-bell"></i>
+                <span>Notifikasi</span>
+            </button>
+            <button class="flex items-center space-x-1 hover:underline">
+                <i class="far fa-question-circle"></i>
+                <span>Bantuan</span>
+            </button>
+            <button class="flex items-center space-x-1 hover:underline">
+                <i class="fas fa-globe"></i>
+                <span>Bahasa Indonesia</span>
+                <i class="fas fa-chevron-down text-[8px]"></i>
+            </button>
+            <div class="relative group">
+                <button aria-expanded="false" aria-haspopup="true" class="flex items-center space-x-1 hover:underline focus:outline-none" id="user-menu-button">
+                    <img alt="Foto profil" class="rounded-full w-6 h-6 object-cover" src="https://storage.googleapis.com/a1aa/image/7caccf1d-24bd-4014-f314-20769f5b7ff9.jpg"/>
+                    <span id="username-display" class="truncate max-w-[90px]">Belum mengisi profil</span>
+                    <i class="fas fa-chevron-down text-[8px]"></i>
+                </button>
+                <div id="user-menu" class="absolute right-0 mt-2 w-40 bg-white rounded shadow-lg text-black text-sm font-semibold hidden group-hover:block z-10" role="menu">
+                    <a class="block px-4 py-2 hover:bg-gray-100" href="#" role="menuitem">Akun Saya</a>
+                    <a class="block px-4 py-2 hover:bg-gray-100" href="#" role="menuitem">Pesanan Saya</a>
+                    <a class="block px-4 py-2 hover:bg-gray-100" href="#" role="menuitem">Log Out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header with logo and search -->
+    <header class="bg-gradient-to-b from-[#1e40af] to-[#2563eb] px-4 sm:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="flex items-center space-x-2 flex-shrink-0">
+            <img alt="Logo INKFINITY" class="w-8 h-8" src="https://storage.googleapis.com/a1aa/image/197279ba-136c-4f88-1d2c-ffbd61ad5494.jpg"/>
+            <span class="text-white font-semibold text-xl select-none">INKFINITY</span>
+        </div>
+        <form aria-label="Cari produk, merek dan toko" class="flex w-full sm:w-[600px]" role="search">
+            <input class="flex-grow rounded-l border border-white border-r-0 px-4 py-2 text-sm focus:outline-none" placeholder="Cari layanan cetak, toko, dan produk" style="background-color: #fff; color: #222222;" type="search"/>
+            <button aria-label="Cari" class="bg-[#1e40af] hover:bg-[#1e3a8a] rounded-r px-4 flex items-center justify-center" type="submit">
+                <i class="fas fa-search text-white"></i>
+            </button>
+        </form>
+    </header>
+    <!-- Subnav -->
+    <nav aria-label="Sub navigation" class="bg-[#2563eb] text-xs text-white px-4 sm:px-8 py-1 overflow-x-auto whitespace-nowrap font-normal">
+        <a class="inline-block mr-4 hover:underline" href="#">Fotocopy</a>
+        <a class="inline-block mr-4 hover:underline" href="#">Digital Printing (Brosur, Flyer, Poster, Banner)</a>
+        <a class="inline-block mr-4 hover:underline" href="#">Offset Printing (Kartu Nama, Undangan, Kalender, Buku)</a>
+        <a class="inline-block mr-4 hover:underline" href="#">Large Format Printing (Spanduk, Billboard, Backdrop)</a>
+    </nav>
+    <!-- Main content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-8 py-8">
+        <div class="bg-white rounded shadow p-6">
+            <h2 class="font-bold text-lg mb-4">Pengaturan Notifikasi</h2>
+            <p class="text-sm text-gray-600 mb-4">Atur preferensi notifikasi Anda di bawah ini. Pilihan ini akan mempengaruhi bagaimana dan kapan Anda menerima informasi dari kami.</p>
+            <form id="notification-settings-form" class="space-y-6">
+                <div class="border-b pb-4">
+                    <h3 class="font-semibold text-md mb-2">Notifikasi Email</h3>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="email-notifications" class="form-checkbox h-5 w-5 text-[#2563eb]"/>
+                        <label for="email-notifications" class="ml-2 text-sm font-medium text-gray-700">Aktifkan Notifikasi Email</label>
+                    </div>
+                    <p class="text-xs text-gray-500 ml-7">Terima notifikasi penting dan pembaruan melalui email.</p>
+                </div>
+                <div class="border-b pb-4">
+                    <h3 class="font-semibold text-md mb-2">Notifikasi SMS</h3>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="sms-notifications" class="form-checkbox h-5 w-5 text-[#2563eb]"/>
+                        <label for="sms-notifications" class="ml-2 text-sm font-medium text-gray-700">Aktifkan Notifikasi SMS</label>
+                    </div>
+                    <p class="text-xs text-gray-500 ml-7">Terima notifikasi penting dan pembaruan melalui SMS.</p>
+                </div>
+                <div class="border-b pb-4">
+                    <h3 class="font-semibold text-md mb-2">Notifikasi Push</h3>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="push-notifications" class="form-checkbox h-5 w-5 text-[#2563eb]"/>
+                        <label for="push-notifications" class="ml-2 text-sm font-medium text-gray-700">Aktifkan Notifikasi Push</label>
+                    </div>
+                    <p class="text-xs text-gray-500 ml-7">Terima notifikasi langsung di perangkat Anda.</p>
+                </div>
+                <div class="border-b pb-4">
+                    <h3 class="font-semibold text-md mb-2">Email Promosi</h3>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="promotional-emails" class="form-checkbox h-5 w-5 text-[#2563eb]"/>
+                        <label for="promotional-emails" class="ml-2 text-sm font-medium text-gray-700">Terima Email Promosi</label>
+                    </div>
+                    <p class="text-xs text-gray-500 ml-7">Izinkan kami untuk mengirimkan penawaran dan informasi terbaru melalui email.</p>
+                </div>
+                <div>
+                    <button class="bg-[#2563eb] text-white px-4 py-2 rounded text-sm font-semibold hover:bg-[#1e40af]" type="submit">Simpan Pengaturan</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

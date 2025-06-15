@@ -1,0 +1,806 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>INKFINITY - Multi-vendor Printing Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+      }
+    </style>
+  </head>
+
+  <body class="bg-white">
+    <!-- Top bar -->
+    <div
+      class="bg-[#1E3A8A] text-white text-xs flex justify-between items-center px-4 sm:px-6 lg:px-20 h-8"
+    >
+      <!-- Left side -->
+      <div class="flex items-center space-x-2 whitespace-nowrap">
+        <a class="hover:underline" href="#">Vendor Centre</a>
+        <span>|</span>
+        <a class="hover:underline" href="#">Download</a>
+        <span>|</span>
+        <span>Follow us on</span>
+        <a aria-label="Facebook" class="hover:underline" href="#">
+          <i
+            class="fab fa-facebook-f bg-white text-[#1E3A8A] rounded-full w-4 h-4 flex items-center justify-center"
+          ></i>
+        </a>
+        <a aria-label="Instagram" class="hover:underline" href="#">
+          <i
+            class="fab fa-instagram bg-white text-[#1E3A8A] rounded-full w-4 h-4 flex items-center justify-center"
+          ></i>
+        </a>
+        <a aria-label="LinkedIn" class="hover:underline" href="#">
+          <i
+            class="fab fa-linkedin-in bg-white text-[#1E3A8A] rounded-full w-4 h-4 flex items-center justify-center"
+          ></i>
+        </a>
+      </div>
+
+      <!-- Right side -->
+      <div class="flex items-center space-x-4 whitespace-nowrap text-xs relative">
+        <div class="flex items-center space-x-1">
+          <div class="relative">
+            <i class="far fa-bell"></i>
+            <span
+              class="absolute -top-2 -right-3 bg-white text-[#1E3A8A] rounded-full text-[10px] font-semibold w-4 h-4 flex items-center justify-center"
+            >
+              3
+            </span>
+          </div>
+          <span>Notifications</span>
+        </div>
+        <div class="flex items-center space-x-1">
+          <i class="far fa-question-circle"></i>
+          <span>Help</span>
+        </div>
+        <div class="flex items-center space-x-1">
+          <i class="fas fa-globe"></i>
+          <span>Bahasa Indonesia</span>
+          <i class="fas fa-chevron-down text-[8px]"></i>
+        </div>
+        <a href="register.html" class="font-semibold hover:underline">Daftar</a>
+        <a href="login.html" class="font-semibold hover:underline">Log In</a>
+
+      </div>
+    </div>
+
+    <!-- Header main -->
+    <header class="bg-gradient-to-b from-[#1E40AF] to-[#3B82F6] text-white select-none">
+      <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-20">
+        <div class="flex items-center py-3 space-x-6">
+          <a
+            class="flex items-center space-x-2 flex-shrink-0"
+            href="#"
+            aria-label="INKFINITY homepage"
+          >
+            <img
+              alt="INKFINITY logo icon, white I on blue background"
+              class="block"
+              height="32"
+              src="https://storage.googleapis.com/a1aa/image/bbf3e31f-cdc5-4d6e-2fa3-149982f1f1c2.jpg"
+              width="32"
+            />
+            <span
+              class="text-white text-2xl font-semibold leading-none"
+              style="letter-spacing: 0.02em; font-family: 'Poppins', sans-serif"
+              >INKFINITY</span
+            >
+          </a>
+          <form class="flex-grow max-w-3xl" role="search" aria-label="Search services">
+            <label class="sr-only" for="search">
+              Search
+            </label>
+            <div class="relative">
+              <input
+                id="search"
+                type="text"
+                placeholder="Cari layanan cetak: Fotocopy, Digital Printing, Offset, Large Format"
+                class="w-full rounded border border-white bg-white placeholder-gray-500 py-2 px-4 pr-12 text-gray-900 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-70"
+              />
+              <button
+                type="submit"
+                aria-label="Search"
+                class="absolute right-2 top-1/2 -translate-y-1/2 bg-[#1E3A8A] hover:bg-[#162c6b] text-white rounded px-3 py-1"
+              >
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </form>
+          <a
+            href="#"
+            aria-label="Shopping Cart"
+            class="flex-shrink-0 text-white text-2xl"
+          >
+            <i class="fas fa-shopping-cart"></i>
+          </a>
+        </div>
+        <nav
+          class="flex flex-wrap gap-x-6 gap-y-1 text-xs font-sans text-white pb-3 border-b border-white border-opacity-20"
+          aria-label="Printing services offered"
+        >
+          <a
+            class="hover:underline"
+            href="#"
+            title="Fotocopy Digital Printing: Brosur, Flyer, Poster, Banner"
+            >Fotocopy Digital Printing (Brosur, Flyer, Poster, Banner)</a
+          >
+          <a
+            class="hover:underline"
+            href="#"
+            title="Offset Printing: Kartu Nama, Undangan, Kalender, Buku"
+            >Offset Printing (Kartu Nama, Undangan, Kalender, Buku)</a
+          >
+          <a
+            class="hover:underline"
+            href="#"
+            title="Large Format Printing: Spanduk, Billboard, Backdrop"
+            >Large Format Printing (Spanduk, Billboard, Backdrop)</a
+          >
+        </nav>
+      </div>
+    </header>
+  </body>
+</html>
+
+  <!-- Banner section -->
+  <section class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-20 mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+   <img alt="Banner showing printing promo with text 'Cari yang murah? Cari yang ada jempolnya! Termurah di INKFINITY Diskon s/d 60% Voucher s/d 100RB' with person holding printed materials" class="w-full h-auto rounded-md object-cover" height="200" src="https://storage.googleapis.com/a1aa/image/238a3064-a7e0-4f3b-7558-5fe4a4898591.jpg" width="700"/>
+   <div class="flex flex-col gap-4 md:col-span-2">
+    <img alt="INKFINITY Mall 100% Original printing products banner with blue background" class="w-full h-auto rounded-md object-cover" height="90" src="https://storage.googleapis.com/a1aa/image/76b9b2ac-a920-4b60-b9c1-b4f26576170b.jpg" width="400"/>
+    <img alt="INKFINITY Barokah banner with printing related images and teal background with text 'Kurban Mudah, Berkah Melimpah Mulai Dari 1,35JT'" class="w-full h-auto rounded-md object-cover" height="90" src="https://storage.googleapis.com/a1aa/image/1c4d937d-cea6-4fb0-ba7d-da8bf4e923ea.jpg" width="400"/>
+   </div>
+  </section>
+  <!-- Icon menu -->
+  <section class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-20 mt-6">
+   <ul aria-label="INKFINITY features" class="flex justify-between flex-wrap gap-y-4 text-center text-[11px] max-w-full" role="list">
+    <li class="flex flex-col items-center w-[9%] min-w-[60px]">
+     <img alt="Local print shop icon in white rounded square background" class="mb-1" height="40" src="https://storage.googleapis.com/a1aa/image/de75015e-d6fc-449f-3e75-6ad916fe91d4.jpg" width="40"/>
+     <span>
+      Print Lokal
+     </span>
+    </li>
+    <li class="flex flex-col items-center w-[9%] min-w-[60px]">
+     <img alt="INKFINITY Mall icon in red rounded square background" class="mb-1" height="40" src="https://storage.googleapis.com/a1aa/image/39e8b8b8-5ce3-44d0-407b-354c956b9d5f.jpg" width="40"/>
+     <span>
+      INKFINITY Mall
+     </span>
+    </li>
+    <li class="flex flex-col items-center w-[9%] min-w-[60px]">
+     <img alt="Order tracking icon in teal rounded square background" class="mb-1" height="40" src="https://storage.googleapis.com/a1aa/image/d248ecc7-eefe-457c-2516-b4200e238d07.jpg" width="40"/>
+     <span>
+      Tracking Pesanan
+     </span>
+    </li>
+    <li class="flex flex-col items-center w-[9%] min-w-[60px]">
+     <img alt="Fashion print icon in red rounded square background" class="mb-1" height="40" src="https://storage.googleapis.com/a1aa/image/6cf3b084-5bed-4840-f86c-ad763fd37ddc.jpg" width="40"/>
+     <span>
+      Print Fashion
+     </span>
+    </li>
+    <li class="flex flex-col items-center w-[9%] min-w-[60px]">
+     <img alt="Supermarket icon in blue rounded square background" class="mb-1" height="40" src="https://storage.googleapis.com/a1aa/image/452fd6df-4ba6-4502-549d-c2ae18c94488.jpg" width="40"/>
+     <span>
+      INKFINITY Supplies
+     </span>
+    </li>
+    <li class="flex flex-col items-center w-[9%] min-w-[60px]">
+     <img alt="Managed service icon in red rounded square background" class="mb-1" height="40" src="https://storage.googleapis.com/a1aa/image/9c7055f1-1300-4b9c-68d4-c9f9c273bbdb.jpg" width="40"/>
+     <span>
+      Layanan Terpercaya
+     </span>
+    </li>
+    <li class="flex flex-col items-center w-[9%] min-w-[60px]">
+     <img alt="Best price icon in red rounded square background" class="mb-1" height="40" src="https://storage.googleapis.com/a1aa/image/2fb55588-a0b4-4d4f-0b86-f9eb30a75e4c.jpg" width="40"/>
+     <span>
+      Harga Terbaik
+     </span>
+    </li>
+    <li class="flex flex-col items-center w-[9%] min-w-[60px]">
+     <img alt="Free shipping and voucher icon in yellow rounded square background" class="mb-1" height="40" src="https://storage.googleapis.com/a1aa/image/c3f2b918-6f79-4da4-89b2-703ebbf90432.jpg" width="40"/>
+     <span>
+      Gratis Ongkir &amp; Voucher
+     </span>
+    </li>
+    <li class="flex flex-col items-center w-[9%] min-w-[60px]">
+     <img alt="INKFINITY Barokah icon in teal rounded square background" class="mb-1" height="40" src="https://storage.googleapis.com/a1aa/image/bc64d163-6406-4097-1260-22e6ae36ffde.jpg" width="40"/>
+     <span>
+      INKFINITY Barokah
+     </span>
+    </li>
+    <li class="flex flex-col items-center w-[9%] min-w-[60px]">
+     <img alt="Promo percentage icon in teal rounded square background" class="mb-1" height="40" src="https://storage.googleapis.com/a1aa/image/347dcb7e-e93a-4c1b-b1c2-3da32c44fcac.jpg" width="40"/>
+     <span>
+      Semua Promo
+     </span>
+    </li>
+   </ul>
+  </section>
+  <!-- Category section -->
+  <section class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-20 mt-8 bg-[#F7F7F7] py-6 rounded-md">
+   <h2 class="text-gray-600 font-semibold mb-4">
+    KATEGORI CETAK
+   </h2>
+   <div class="overflow-x-auto">
+    <div class="min-w-[900px] grid grid-cols-12 gap-4">
+     <!-- 12 category items top row -->
+     <div class="flex flex-col items-center">
+      <img alt="Business card printing category icon" class="rounded-full bg-white p-2" height="60" src="https://storage.googleapis.com/a1aa/image/111276e1-3faf-42b8-0c60-251b2a87089f.jpg" width="60"/>
+      <div class="h-4 w-full bg-white rounded mt-2">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+     </div>
+     <div class="flex flex-col items-center">
+      <img alt="Brochure printing category icon" class="rounded-full bg-white p-2" height="60" src="https://storage.googleapis.com/a1aa/image/8b116229-fb44-46de-47a2-a2f3df5ee4c7.jpg" width="60"/>
+      <div class="h-4 w-full bg-white rounded mt-2">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+     </div>
+     <div class="flex flex-col items-center">
+      <img alt="Sticker printing category icon" class="rounded-full bg-white p-2" height="60" src="https://storage.googleapis.com/a1aa/image/5c2d6e16-463f-4d53-6d8a-99ac6ff581a5.jpg" width="60"/>
+      <div class="h-4 w-full bg-white rounded mt-2">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+     </div>
+     <div class="flex flex-col items-center">
+      <img alt="Invitation printing category icon" class="rounded-full bg-white p-2" height="60" src="https://storage.googleapis.com/a1aa/image/da90659e-8654-4057-100b-f3642f9b3f3b.jpg" width="60"/>
+      <div class="h-4 w-full bg-white rounded mt-2">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+     </div>
+     <div class="flex flex-col items-center">
+      <img alt="Banner printing category icon" class="rounded-full bg-white p-2" height="60" src="https://storage.googleapis.com/a1aa/image/9ca80769-b997-403d-3027-e7406f708d69.jpg" width="60"/>
+      <div class="h-4 w-full bg-white rounded mt-2">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+     </div>
+     <div class="flex flex-col items-center">
+      <img alt="T-shirt printing category icon" class="rounded-full bg-white p-2" height="60" src="https://storage.googleapis.com/a1aa/image/990392a7-2cd4-4570-bf1a-a9103b9acbdd.jpg" width="60"/>
+      <div class="h-4 w-full bg-white rounded mt-2">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+     </div>
+     <div class="flex flex-col items-center">
+      <img alt="Calendar printing category icon" class="rounded-full bg-white p-2" height="60" src="https://storage.googleapis.com/a1aa/image/47e29e56-5d9b-44af-7d07-dfc22bf572fe.jpg" width="60"/>
+      <div class="h-4 w-full bg-white rounded mt-2">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+     </div>
+     <div class="flex flex-col items-center">
+      <img alt="Book printing category icon" class="rounded-full bg-white p-2" height="60" src="https://storage.googleapis.com/a1aa/image/62d790c5-0dbb-4ba1-3fd6-45640e8e9b32.jpg" width="60"/>
+      <div class="h-4 w-full bg-white rounded mt-2">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+     </div>
+     <div class="flex flex-col items-center">
+      <img alt="Label printing category icon" class="rounded-full bg-white p-2" height="60" src="https://storage.googleapis.com/a1aa/image/f4a41671-f264-4bb0-61af-c37f893d8569.jpg" width="60"/>
+      <div class="h-4 w-full bg-white rounded mt-2">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+     </div>
+     <div class="flex flex-col items-center">
+      <img alt="Packaging printing category icon" class="rounded-full bg-white p-2" height="60" src="https://storage.googleapis.com/a1aa/image/7d925d36-7788-4dcd-a3c6-ce7de18e66f6.jpg" width="60"/>
+      <div class="h-4 w-full bg-white rounded mt-2">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+     </div>
+     <div class="flex flex-col items-center">
+      <img alt="Poster printing category icon" class="rounded-full bg-white p-2" height="60" src="https://storage.googleapis.com/a1aa/image/312e19f2-294d-47c2-9512-49ec92af5ccb.jpg" width="60"/>
+      <div class="h-4 w-full bg-white rounded mt-2">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+     </div>
+     <div class="flex flex-col items-center">
+      <img alt="Gift printing category icon" class="rounded-full bg-white p-2" height="60" src="https://storage.googleapis.com/a1aa/image/efdae34c-52d6-4264-f469-016f61ed55ca.jpg" width="60"/>
+      <div class="h-4 w-full bg-white rounded mt-2">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+      <div class="h-4 w-full bg-white rounded mt-1">
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- Floating INKFINITY Promo -->
+  <div class="fixed right-4 top-[50%] translate-y-[-50%] z-50 flex flex-col items-center space-y-2">
+   <div class="relative">
+    <img alt="INKFINITY promo icon with red badge showing 2 notifications" class="rounded-md" height="80" src="https://storage.googleapis.com/a1aa/image/db2c04a4-2fe0-49fe-e2e6-b4e654872225.jpg" width="80"/>
+    <span class="absolute -top-1 -left-1 bg-red-600 text-white rounded-full text-xs font-semibold w-5 h-5 flex items-center justify-center">
+     2
+    </span>
+    <button aria-label="Close INKFINITY promo" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+     <i class="fas fa-times">
+     </i>
+    </button>
+   </div>
+   <button aria-label="Ambil di sini INKFINITY promo" class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-md">
+    AMBIL DI SINI
+   </button>
+  </div>
+  <!-- Chat button bottom right -->
+  <button aria-label="Chat" class="fixed bottom-4 right-4 bg-white border border-[#1E3A8A] text-[#1E3A8A] rounded-md px-4 py-2 flex items-center space-x-2 shadow-lg z-50">
+   <i class="fas fa-comment-alt">
+   </i>
+   <span>
+    Chat
+   </span>
+  </button>
+ </body>
+</html>
+
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Flash Sale and Produk Terlaris - INKFINITY
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+    font-family: "Poppins", sans-serif;
+   }
+  </style>
+ </head>
+ <body class="bg-white">
+  <main class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-20 pt-10 pb-20">
+   <!-- Flash Sale Section -->
+   <section class="bg-white p-6 mb-16 rounded-md shadow-sm border border-blue-300">
+    <div class="flex justify-between items-center mb-6">
+     <h2 class="text-xl font-semibold text-[#1E3A8A] flex items-center gap-1">
+      <span class="font-extrabold text-2xl flex items-center gap-1">
+       F
+       <span class="text-[#1E3A8A] font-extrabold leading-none">
+        ⚡
+       </span>
+       ASH
+      </span>
+      SALE
+     </h2>
+     <div class="flex items-center space-x-1 font-mono font-bold text-[15px]">
+      <span class="bg-[#1E3A8A] text-white rounded px-2 py-[2px]">
+       10
+      </span>
+      <span class="bg-[#1E3A8A] text-white rounded px-2 py-[2px]">
+       56
+      </span>
+      <span class="bg-[#1E3A8A] text-white rounded px-2 py-[2px]">
+       14
+      </span>
+     </div>
+     <a class="text-[#1E3A8A] text-sm hover:underline font-normal" href="#">
+      Lihat Semua &gt;
+     </a>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-x-4 gap-y-6 justify-items-center">
+     <!-- Product 1 -->
+     <div class="flex flex-col items-center max-w-[160px]">
+      <img alt="Fotocopy machine on white background" class="w-full h-auto object-contain rounded-md" height="160" src="https://storage.googleapis.com/a1aa/image/396be2d7-10dc-446d-fd2e-3fcebf0c2e40.jpg" width="160"/>
+      <p class="text-[#1E3A8A] font-semibold mt-3 text-base">
+       Rp 26.800
+      </p>
+      <div class="mt-1 bg-gradient-to-r from-[#1E3A8A] to-[#93c5fd] rounded-full px-4 py-1 text-xs font-bold text-white select-none" style="width: 110px; text-align:center">
+       STOK TERBATAS
+      </div>
+     </div>
+     <!-- Product 2 -->
+     <div class="flex flex-col items-center max-w-[160px]">
+      <img alt="Digital printing flyer and brochure on white background" class="w-full h-auto object-contain rounded-md" height="160" src="https://storage.googleapis.com/a1aa/image/01f79f5e-6ff3-49a6-9530-9a35410134e4.jpg" width="160"/>
+      <p class="text-[#1E3A8A] font-semibold mt-3 text-base">
+       Rp 33.600
+      </p>
+      <div class="mt-1 bg-gradient-to-r from-[#1E3A8A] to-[#93c5fd] rounded-full px-4 py-1 text-xs font-bold text-white select-none" style="width: 110px; text-align:center">
+       STOK TERBATAS
+      </div>
+     </div>
+     <!-- Product 3 -->
+     <div class="flex flex-col items-center max-w-[160px]">
+      <img alt="Offset printing business cards and invitations on white background" class="w-full h-auto object-contain rounded-md" height="160" src="https://storage.googleapis.com/a1aa/image/fa5de70f-dfc1-4dc1-830b-c2d2d0902217.jpg" width="160"/>
+      <p class="text-[#1E3A8A] font-semibold mt-3 text-base">
+       Rp 14.000
+      </p>
+      <div class="mt-1 bg-gradient-to-r from-[#1E3A8A] to-[#93c5fd] rounded-full px-4 py-1 text-xs font-bold text-white select-none" style="width: 110px; text-align:center">
+       STOK TERBATAS
+      </div>
+     </div>
+     <!-- Product 4 -->
+     <div class="flex flex-col items-center max-w-[160px]">
+      <img alt="Large format printing banner and billboard on white background" class="w-full h-auto object-contain rounded-md" height="160" src="https://storage.googleapis.com/a1aa/image/b5a2f3c3-ca16-4491-9cba-43be46e31c1d.jpg" width="160"/>
+      <p class="text-[#1E3A8A] font-semibold mt-3 text-base">
+       Rp 39.000
+      </p>
+      <div class="mt-1 bg-gradient-to-r from-[#1E3A8A] to-[#93c5fd] rounded-full px-4 py-1 text-xs font-bold text-white select-none" style="width: 110px; text-align:center">
+       STOK TERBATAS
+      </div>
+     </div>
+     <!-- Product 5 -->
+     <div class="flex flex-col items-center max-w-[160px]">
+      <img alt="Printing service banner with various printed materials on white background" class="w-full h-auto object-contain rounded-md" height="160" src="https://storage.googleapis.com/a1aa/image/61d821c5-7211-4ec0-b740-c8c7e8df16cf.jpg" width="160"/>
+      <p class="text-[#1E3A8A] font-semibold mt-3 text-base">
+       Rp 28.050
+      </p>
+      <div class="mt-1 bg-gradient-to-r from-[#1E3A8A] to-[#93c5fd] rounded-full px-4 py-1 text-xs font-bold text-white select-none" style="width: 110px; text-align:center">
+       STOK TERBATAS
+      </div>
+     </div>
+     <!-- Product 6 -->
+     <div class="flex flex-col items-center max-w-[160px]">
+      <img alt="Printing paper and supplies on white background" class="w-full h-auto object-contain rounded-md" height="160" src="https://storage.googleapis.com/a1aa/image/dcf5a306-c183-4f4f-78b5-272b128c00f9.jpg" width="160"/>
+      <p class="text-[#1E3A8A] font-semibold mt-3 text-base">
+       Rp 20.900
+      </p>
+      <div class="mt-1 bg-gradient-to-r from-[#1E3A8A] to-[#93c5fd] rounded-full px-4 py-1 text-xs font-bold text-white select-none" style="width: 110px; text-align:center">
+       STOK TERBATAS
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- Produk Terlaris Section -->
+   <section>
+    <div class="flex justify-between items-center mb-6 px-2">
+     <h3 class="text-[#1E3A8A] font-semibold text-sm uppercase tracking-wide">
+      PRODUK TERLARIS
+     </h3>
+     <a class="text-[#1E3A8A] text-sm hover:underline font-normal" href="#">
+      Lihat Semua &gt;
+     </a>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-x-4 gap-y-8 justify-items-center">
+     <!-- Item 1 -->
+     <div class="max-w-[160px] flex flex-col items-center">
+      <div class="relative w-full rounded-md overflow-hidden shadow-sm border border-blue-300">
+       <img alt="Fotocopy machine with paper tray on white background" class="w-full h-auto object-contain" height="160" src="https://storage.googleapis.com/a1aa/image/d90fd8ff-f582-4c6a-896f-3550dc7c3cea.jpg" width="160"/>
+       <div class="absolute top-0 left-0 bg-[#1E3A8A] text-white text-xs font-bold px-2 py-1 rounded-br">
+        TOP
+       </div>
+       <div class="absolute bottom-0 left-0 bg-[#004d4d] text-white text-xs px-2 py-0.5 rounded-tr">
+        Penjualan / Bulan 11RB+
+       </div>
+      </div>
+      <p class="mt-2 text-gray-800 text-center text-sm font-normal leading-tight">
+       Fotocopy
+      </p>
+     </div>
+     <!-- Item 2 -->
+     <div class="max-w-[160px] flex flex-col items-center">
+      <div class="relative w-full rounded-md overflow-hidden shadow-sm border border-blue-300">
+       <img alt="Digital printing flyers and brochures on white background" class="w-full h-auto object-contain" height="160" src="https://storage.googleapis.com/a1aa/image/cae59743-ffd7-4159-579b-23b0ce6ad528.jpg" width="160"/>
+       <div class="absolute top-0 left-0 bg-[#1E3A8A] text-white text-xs font-bold px-2 py-1 rounded-br">
+        TOP
+       </div>
+       <div class="absolute bottom-0 left-0 bg-[#007a5a] text-white text-xs px-2 py-0.5 rounded-tr">
+        Penjualan / Bulan 276🐢
+       </div>
+      </div>
+      <p class="mt-2 text-gray-800 text-center text-sm font-normal leading-tight">
+       Digital Printing
+      </p>
+     </div>
+     <!-- Item 3 -->
+     <div class="max-w-[160px] flex flex-col items-center">
+      <div class="relative w-full rounded-md overflow-hidden shadow-sm border border-blue-300">
+       <img alt="Offset printing business cards and invitations on white background" class="w-full h-auto object-contain" height="160" src="https://storage.googleapis.com/a1aa/image/fa5de70f-dfc1-4dc1-830b-c2d2d0902217.jpg" width="160"/>
+       <div class="absolute top-0 left-0 bg-[#1E3A8A] text-white text-xs font-bold px-2 py-1 rounded-br">
+        TOP
+       </div>
+       <div class="absolute bottom-0 left-0 bg-[#004d4d] text-white text-xs px-2 py-0.5 rounded-tr">
+        Penjualan / Bulan 11RB+
+       </div>
+      </div>
+      <p class="mt-2 text-gray-800 text-center text-sm font-normal leading-tight">
+       Offset Printing
+      </p>
+     </div>
+     <!-- Item 4 -->
+     <div class="max-w-[160px] flex flex-col items-center">
+      <div class="relative w-full rounded-md overflow-hidden shadow-sm border border-blue-300">
+       <img alt="Large format printing banner and billboard on white background" class="w-full h-auto object-contain" height="160" src="https://storage.googleapis.com/a1aa/image/b5a2f3c3-ca16-4491-9cba-43be46e31c1d.jpg" width="160"/>
+       <div class="absolute top-0 left-0 bg-[#1E3A8A] text-white text-xs font-bold px-2 py-1 rounded-br">
+        TOP
+       </div>
+       <div class="absolute bottom-0 left-0 bg-[#004d4d] text-white text-xs px-2 py-0.5 rounded-tr">
+        Penjualan / Bulan 12RB+
+       </div>
+      </div>
+      <p class="mt-2 text-gray-800 text-center text-sm font-normal leading-tight">
+       Large Format Printing
+      </p>
+     </div>
+     <!-- Item 5 -->
+     <div class="max-w-[160px] flex flex-col items-center">
+      <div class="relative w-full rounded-md overflow-hidden shadow-sm border border-blue-300">
+       <img alt="Printing service banner with various printed materials on white background" class="w-full h-auto object-contain" height="160" src="https://storage.googleapis.com/a1aa/image/61d821c5-7211-4ec0-b740-c8c7e8df16cf.jpg" width="160"/>
+       <div class="absolute top-0 left-0 bg-[#1E3A8A] text-white text-xs font-bold px-2 py-1 rounded-br">
+        TOP
+       </div>
+       <div class="absolute bottom-0 left-0 bg-[#004d4d] text-white text-xs px-2 py-0.5 rounded-tr">
+        Penjualan / Bulan 2RB+
+       </div>
+      </div>
+      <p class="mt-2 text-gray-800 text-center text-sm font-normal leading-tight">
+       Printing Services
+      </p>
+     </div>
+     <!-- Item 6 -->
+     <div class="max-w-[160px] flex flex-col items-center">
+      <div class="relative w-full rounded-md overflow-hidden shadow-sm border border-blue-300">
+       <img alt="Printing paper and supplies on white background" class="w-full h-auto object-contain" height="160" src="https://storage.googleapis.com/a1aa/image/dcf5a306-c183-4f4f-78b5-272b128c00f9.jpg" width="160"/>
+       <div class="absolute top-0 left-0 bg-[#1E3A8A] text-white text-xs font-bold px-2 py-1 rounded-br">
+        TOP
+       </div>
+       <div class="absolute bottom-0 left-0 bg-[#004d4d] text-white text-xs px-2 py-0.5 rounded-tr">
+        Penjualan / Bulan 5RB+
+       </div>
+      </div>
+      <p class="mt-2 text-gray-800 text-center text-sm font-normal leading-tight">
+       Printing Supplies
+      </p>
+     </div>
+    </div>
+   </section>
+  </main>
+  <!-- Floating INKFINITY Promo -->
+  <div class="fixed right-4 top-[50%] translate-y-[-50%] z-50 flex flex-col items-center space-y-2">
+   <div class="relative">
+    <img alt="INKFINITY promo icon with red badge showing 2 notifications" class="rounded-md" height="80" src="https://storage.googleapis.com/a1aa/image/db2c04a4-2fe0-49fe-e2e6-b4e654872225.jpg" width="80"/>
+    <span class="absolute -top-1 -left-1 bg-red-600 text-white rounded-full text-xs font-semibold w-5 h-5 flex items-center justify-center">
+     2
+    </span>
+    <button aria-label="Close INKFINITY promo" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+     <i class="fas fa-times">
+     </i>
+    </button>
+   </div>
+   <button aria-label="Ambil di sini INKFINITY promo" class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-md">
+    AMBIL DI SINI
+   </button>
+  </div>
+  <!-- Chat button bottom right -->
+  <button aria-label="Chat" class="fixed bottom-4 right-4 bg-[#1E3A8A] border border-[#1E3A8A] text-white rounded-md px-4 py-2 flex items-center space-x-2 shadow-lg z-50">
+   <i class="fas fa-comment-alt">
+   </i>
+   <span>
+    Chat
+   </span>
+  </button>
+ </body>
+</html>
+
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   INKFINITY - Rekomendasi Layanan Cetak
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+      font-family: "Inter", sans-serif;
+    }
+  </style>
+ </head>
+ <body class="bg-[#f0f5fb]">
+  <div class="max-w-[1200px] mx-auto px-4 pt-8">
+   <h1 class="text-[#1e40af] text-center text-2xl font-bold mb-4" style="line-height: 1.3;">
+    INKFINITY
+   </h1>
+   <p class="text-center text-[#1e40af] text-sm mb-6 max-w-xl mx-auto">
+    Multi-vendor marketplace khusus layanan cetak: Fotocopy, Digital Printing, Offset Printing, dan Large Format Printing.
+   </p>
+   <h2 class="text-[#1e40af] text-center text-[16px] font-semibold mb-2" style="line-height: 1.3; font-weight: 600;">
+    REKOMENDASI LAYANAN CETAK
+   </h2>
+   <div class="border-t-2 border-[#2563eb] mb-4">
+   </div>
+   <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2" style="font-size: 12px; line-height: 1.2">
+    <!-- Card 1: Fotocopy -->
+    <div class="bg-white p-1.5 shadow-sm hover:shadow-md transition-shadow duration-200 rounded">
+     <div class="relative">
+      <img alt="Fotocopy machine with paper stack and printing process" class="w-full" height="260" src="https://storage.googleapis.com/a1aa/image/9a104422-bca4-4e2d-ab0a-d2cc2cf5a722.jpg" width="260"/>
+      <div class="absolute top-2 right-2 text-[11px] text-[#2563eb] font-semibold bg-[#dbeafe] rounded px-1">
+       -20%
+      </div>
+     </div>
+     <div class="mt-1 text-[13px] text-[#1e3a8a] leading-tight font-semibold">
+      <span class="bg-[#2563eb] text-white text-[10px] px-[3px] rounded font-semibold">
+       Layanan
+      </span>
+      Fotocopy Cepat &amp; Murah
+     </div>
+     <div class="flex flex-wrap gap-1 mt-1">
+      <span class="text-[#2563eb] text-[10px] border border-[#2563eb] rounded px-1">
+       Termurah di INKFINITY
+      </span>
+      <span class="text-white bg-[#2563eb] text-[10px] font-bold px-1 rounded">
+       COD
+      </span>
+     </div>
+     <div class="flex justify-between mt-1 text-[#2563eb] font-semibold">
+      <span>
+       Rp500 / lembar
+      </span>
+      <span class="text-[11px] text-[#4b5563] font-normal">
+       1RB+ Order
+      </span>
+     </div>
+    </div>
+    <!-- Card 2: Digital Printing -->
+    <div class="bg-white p-1.5 shadow-sm hover:shadow-md transition-shadow duration-200 rounded">
+     <div class="relative">
+      <img alt="Digital printing of flyers, brochures, and posters" class="w-full" height="260" src="https://storage.googleapis.com/a1aa/image/204c849f-63d1-46c3-7f41-67a086c69ac2.jpg" width="260"/>
+      <div class="absolute top-2 right-2 text-[11px] text-[#2563eb] font-semibold bg-[#dbeafe] rounded px-1">
+       -15%
+      </div>
+     </div>
+     <div class="mt-1 text-[13px] text-[#1e3a8a] leading-tight font-semibold">
+      <span class="bg-[#2563eb] text-white text-[10px] px-[3px] rounded font-semibold">
+       Layanan
+      </span>
+      Digital Printing (Brosur, Flyer, Poster)
+     </div>
+     <div class="flex flex-wrap gap-1 mt-1">
+      <span class="text-[#2563eb] text-[10px] border border-[#2563eb] rounded px-1">
+       Promo Spesial
+      </span>
+      <span class="text-white bg-[#2563eb] text-[10px] font-bold px-1 rounded">
+       COD
+      </span>
+     </div>
+     <div class="flex justify-between mt-1 text-[#2563eb] font-semibold">
+      <span>
+       Rp1.200 / paket
+      </span>
+      <span class="text-[11px] text-[#4b5563] font-normal">
+       500+ Order
+      </span>
+     </div>
+    </div>
+    <!-- Card 3: Offset Printing -->
+    <div class="bg-white p-1.5 shadow-sm hover:shadow-md transition-shadow duration-200 rounded">
+     <div class="relative">
+      <img alt="Offset printing of business cards, invitations, calendars, and books" class="w-full" height="260" src="https://storage.googleapis.com/a1aa/image/57d1ab14-4bb4-41ac-83ba-151853e4caab.jpg" width="260"/>
+      <div class="absolute top-2 right-2 text-[11px] text-[#2563eb] font-semibold bg-[#dbeafe] rounded px-1">
+       -18%
+      </div>
+     </div>
+     <div class="mt-1 text-[13px] text-[#1e3a8a] leading-tight font-semibold">
+      <span class="bg-[#2563eb] text-white text-[10px] px-[3px] rounded font-semibold">
+       Layanan
+      </span>
+      Offset Printing (Kartu Nama, Undangan)
+     </div>
+     <div class="flex flex-wrap gap-1 mt-1">
+      <span class="text-[#2563eb] text-[10px] border border-[#2563eb] rounded px-1">
+       Pilih Lokal
+      </span>
+      <span class="text-white bg-[#2563eb] text-[10px] font-bold px-1 rounded">
+       COD
+      </span>
+     </div>
+     <div class="flex justify-between mt-1 text-[#2563eb] font-semibold">
+      <span>
+       Rp2.500 / 100 pcs
+      </span>
+      <span class="text-[11px] text-[#4b5563] font-normal">
+       300+ Order
+      </span>
+     </div>
+    </div>
+    <!-- Card 4: Large Format Printing -->
+    <div class="bg-white p-1.5 shadow-sm hover:shadow-md transition-shadow duration-200 rounded">
+     <div class="relative">
+      <img alt="Large format printing of banners, billboards, and backdrops" class="w-full" height="260" src="https://storage.googleapis.com/a1aa/image/8ef2f191-b242-4375-8033-ced711b8e778.jpg" width="260"/>
+      <div class="absolute top-2 right-2 text-[11px] text-[#2563eb] font-semibold bg-[#dbeafe] rounded px-1">
+       -22%
+      </div>
+     </div>
+     <div class="mt-1 text-[13px] text-[#1e3a8a] leading-tight font-semibold">
+      <span class="bg-[#2563eb] text-white text-[10px] px-[3px] rounded font-semibold">
+       Layanan
+      </span>
+      Large Format Printing (Spanduk, Billboard)
+     </div>
+     <div class="flex flex-wrap gap-1 mt-1">
+      <span class="text-[#2563eb] text-[10px] border border-[#2563eb] rounded px-1">
+       Diskon Besar
+      </span>
+      <span class="text-white bg-[#2563eb] text-[10px] font-bold px-1 rounded">
+       COD
+      </span>
+     </div>
+     <div class="flex justify-between mt-1 text-[#2563eb] font-semibold">
+      <span>
+       Rp150.000 / m²
+      </span>
+      <span class="text-[11px] text-[#4b5563] font-normal">
+       200+ Order
+      </span>
+     </div>
+    </div>
+    <!-- Card 5: Bonus - Custom Printing -->
+    <div class="bg-white p-1.5 shadow-sm hover:shadow-md transition-shadow duration-200 rounded">
+     <div class="relative">
+      <img alt="Custom printing services with various printed materials" class="w-full" height="260" src="https://storage.googleapis.com/a1aa/image/8e4cf244-ac9c-4bd2-facc-b1989af56ac9.jpg" width="260"/>
+      <div class="absolute top-2 right-2 text-[11px] text-[#2563eb] font-semibold bg-[#dbeafe] rounded px-1">
+       -10%
+      </div>
+     </div>
+     <div class="mt-1 text-[13px] text-[#1e3a8a] leading-tight font-semibold">
+      <span class="bg-[#2563eb] text-white text-[10px] px-[3px] rounded font-semibold">
+       Layanan
+      </span>
+      Custom Printing Sesuai Kebutuhan Anda
+     </div>
+     <div class="flex flex-wrap gap-1 mt-1">
+      <span class="text-[#2563eb] text-[10px] border border-[#2563eb] rounded px-1">
+       Fleksibel &amp; Cepat
+      </span>
+      <span class="text-white bg-[#2563eb] text-[10px] font-bold px-1 rounded">
+       COD
+      </span>
+     </div>
+     <div class="flex justify-between mt-1 text-[#2563eb] font-semibold">
+      <span>
+       Mulai Rp5.000
+      </span>
+      <span class="text-[11px] text-[#4b5563] font-normal">
+       150+ Order
+      </span>
+     </div>
+    </div>
+   </div>
+  </div>
+ </body>
+</html>
